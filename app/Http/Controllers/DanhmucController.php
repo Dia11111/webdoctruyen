@@ -13,7 +13,8 @@ class DanhmucController extends Controller
      */
     public function index()
     {
-        return view('admincp.danhmuctruyen.index');
+        $danhmuctruyen = DanhmucTruyen::orderBy('id', 'DESC')->get();
+        return view('admincp.danhmuctruyen.index')->with(compact('danhmuctruyen'));
     }
 
     /**
@@ -36,14 +37,24 @@ class DanhmucController extends Controller
     {
         $data = $request->validate( 
             [
-                'tendanhmuc' => 'required|unique:tendanhmuc|max:255',
+                'tendanhmuc' => 'required|unique:danhmuc|max:255',
                 'mota' => 'required|max:255',
+                'kichhoat' => 'required',
             ],
-            [            
+            [
+                'tendanhmuc.unique' => 'Tên danh mục đã được chọn, xin điền tên khác',            
                 'tendanhmuc.required' => 'Tên danh mục phải có nhé',
                 'mota.required' => 'Mô tả danh mục phải có nhé',
             ]
     );
+    $danhmuctruyen = new DanhmucTruyen();
+    $danhmuctruyen->tendanhmuc = $data['tendanhmuc'];
+    $danhmuctruyen->mota = $data['mota'];
+    $danhmuctruyen->kichhoat = $data['kichhoat'];
+
+    $danhmuctruyen->save();
+
+    return redirect()->back()->with('status', 'Thêm danh mục truyện thành công');
     }
 
     /**
@@ -65,7 +76,8 @@ class DanhmucController extends Controller
      */
     public function edit($id)
     {
-        //
+        $danhmuc = DanhmucTruyen::find($id);
+        return view('admincp.danhmuctruyen.edit')->with(compact('danhmuc'));
     }
 
     /**
@@ -77,7 +89,26 @@ class DanhmucController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->validate( 
+            [
+                'tendanhmuc' => 'required|max:255',
+                'mota' => 'required|max:255',
+                'kichhoat' => 'required',
+            ],
+            [            
+                'tendanhmuc.required' => 'Tên danh mục phải có nhé',
+                'mota.required' => 'Mô tả danh mục phải có nhé',
+            ]
+    );
+    $danhmuctruyen = DanhmucTruyen::find($id);
+
+    $danhmuctruyen->tendanhmuc = $data['tendanhmuc'];
+    $danhmuctruyen->mota = $data['mota'];
+    $danhmuctruyen->kichhoat = $data['kichhoat'];
+
+    $danhmuctruyen->save();
+
+    return redirect()->back()->with('status', 'Cập nhật danh mục truyện thành công');
     }
 
     /**
@@ -88,6 +119,7 @@ class DanhmucController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DanhmucTruyen::find($id)->delete();
+        return redirect()->back()->with('status', 'Xóa danh mục truyện thành công');   
     }
 }
