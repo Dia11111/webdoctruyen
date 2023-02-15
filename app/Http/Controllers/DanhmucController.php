@@ -35,7 +35,7 @@ class DanhmucController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate( 
+        $data = $request->validate(
             [
                 'tendanhmuc' => 'required|unique:danhmuc|max:255',
                 'slug_danhmuc' => 'required|unique:danhmuc|max:255',
@@ -43,8 +43,8 @@ class DanhmucController extends Controller
                 'kichhoat' => 'required',
             ],
             [
-                'tendanhmuc.unique' => 'Tên danh mục đã được chọn, xin điền tên khác', 
-                'slug_danhmuc.unique' => 'Slug trùng điền slug khác',           
+                'tendanhmuc.unique' => 'Tên danh mục đã được chọn, xin điền tên khác',
+                'slug_danhmuc.unique' => 'Slug trùng điền slug khác',
                 'tendanhmuc.required' => 'Tên danh mục phải có nhé',
                 'mota.required' => 'Mô tả danh mục phải có nhé',
             ]
@@ -92,15 +92,15 @@ class DanhmucController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->validate( 
+        $data = $request->validate(
             [
                 'tendanhmuc' => 'required|max:255',
                 'slug_danhmuc' => 'required|max:255',
                 'mota' => 'required|max:255',
                 'kichhoat' => 'required',
             ],
-            [ 
-                'slug_danhmuc.required' => 'Slug phải có nhé',           
+            [
+                'slug_danhmuc.required' => 'Slug phải có nhé',
                 'tendanhmuc.required' => 'Tên danh mục phải có nhé',
                 'mota.required' => 'Mô tả danh mục phải có nhé',
             ]
@@ -125,6 +125,6 @@ class DanhmucController extends Controller
     public function destroy($id)
     {
         DanhmucTruyen::find($id)->delete();
-        return redirect()->back()->with('status', 'Xóa danh mục truyện thành công');   
+        return redirect()->back()->with('status', 'Xóa danh mục truyện thành công');
     }
 }
