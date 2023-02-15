@@ -38,17 +38,20 @@ class DanhmucController extends Controller
         $data = $request->validate( 
             [
                 'tendanhmuc' => 'required|unique:danhmuc|max:255',
+                'slug_danhmuc' => 'required|unique:danhmuc|max:255',
                 'mota' => 'required|max:255',
                 'kichhoat' => 'required',
             ],
             [
-                'tendanhmuc.unique' => 'Tên danh mục đã được chọn, xin điền tên khác',            
+                'tendanhmuc.unique' => 'Tên danh mục đã được chọn, xin điền tên khác', 
+                'slug_danhmuc.unique' => 'Slug trùng điền slug khác',           
                 'tendanhmuc.required' => 'Tên danh mục phải có nhé',
                 'mota.required' => 'Mô tả danh mục phải có nhé',
             ]
     );
     $danhmuctruyen = new DanhmucTruyen();
     $danhmuctruyen->tendanhmuc = $data['tendanhmuc'];
+    $danhmuctruyen->slug_danhmuc = $data['slug_danhmuc'];
     $danhmuctruyen->mota = $data['mota'];
     $danhmuctruyen->kichhoat = $data['kichhoat'];
 
@@ -92,17 +95,19 @@ class DanhmucController extends Controller
         $data = $request->validate( 
             [
                 'tendanhmuc' => 'required|max:255',
+                'slug_danhmuc' => 'required|max:255',
                 'mota' => 'required|max:255',
                 'kichhoat' => 'required',
             ],
-            [            
+            [ 
+                'slug_danhmuc.required' => 'Slug phải có nhé',           
                 'tendanhmuc.required' => 'Tên danh mục phải có nhé',
                 'mota.required' => 'Mô tả danh mục phải có nhé',
             ]
     );
     $danhmuctruyen = DanhmucTruyen::find($id);
-
     $danhmuctruyen->tendanhmuc = $data['tendanhmuc'];
+    $danhmuctruyen->slug_danhmuc = $data['slug_danhmuc'];
     $danhmuctruyen->mota = $data['mota'];
     $danhmuctruyen->kichhoat = $data['kichhoat'];
 
