@@ -123,7 +123,7 @@ class TruyenController extends Controller
                 'slug_truyen.unique' => 'Slug trùng điền slug khác',
             ]
         );
-        $truyen = Truyen::find($id);;
+        $truyen = Truyen::find($id);
         $truyen->tentruyen = $data['tentruyen'];
         $truyen->slug_truyen = $data['slug_truyen'];
         $truyen->tomtat = $data['tomtat'];

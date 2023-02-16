@@ -30,7 +30,17 @@
                                     <li><a class="dropdown-item" href="{{route('truyen.create')}}">Thêm sách truyện</a></li>
                                     <li><a class="dropdown-item" href="{{route('truyen.index')}}">Liệt kê sách truyện</a></li>
                                 </ul>
-                                
+
+                                </li>
+                                <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Chapter
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="{{route('chapter.create')}}">Thêm chapter</a></li>
+                                    <li><a class="dropdown-item" href="{{route('chapter.index')}}">Liệt kê chapter</a></li>
+                                </ul>
+
                                 </li>
                             </ul>
                             <form class="d-flex">

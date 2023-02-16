@@ -19,9 +19,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Auth::routes();
+// Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+// Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::resource('/danhmuc', DanhmucController::class);
-Route::resource('/truyen', TruyenController::class);
+// Route::resource('/danhmuc', DanhmucController::class);
+// Route::resource('/truyen', TruyenController::class);

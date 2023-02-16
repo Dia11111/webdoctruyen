@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\ChapterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DanhmucController;
+use App\Http\Controllers\indexController;
 use App\Http\Controllers\TruyenController;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,13 +19,13 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('layout');
-});
+Route::get('/', [indexController::class, 'home']);
+Route::get('/doc-truyen/{id}', [indexController::class, 'doctruyen'])->name('doctruyen');
 
 Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-                                                                    
+Route::get('/home', [indexController::class, 'index'])->name('home');
+
 Route::resource('/danhmuc', DanhmucController::class);
 Route::resource('/truyen', TruyenController::class);
+Route::resource('/chapter', ChapterController::class);
