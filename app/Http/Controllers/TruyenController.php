@@ -41,6 +41,7 @@ class TruyenController extends Controller
         $data = $request->validate(
             [
                 'tentruyen' => 'required|max:255',
+                'tacgia'=> 'required',
                 'tomtat' => 'max:255',
                 'hinhanh' => 'required | mimes:jpeg,jpg,png,svg,gif,jpeg | max:2048',
                 'slug_truyen' => 'required',
@@ -50,13 +51,16 @@ class TruyenController extends Controller
             [
                 'tentruyen.unique' => 'Tên truyện đã được chọn, xin điền tên khác',
                 'slug_truyen.unique' => 'Slug trùng điền slug khác',
+                'tentruyen.required' => 'Tên truyện phải có nhé',
                 'hinhanh.required' => 'Hình ảnh hải có',
+                'tacgia.required' => 'Tác giả phải có nhé',
             ]
         );
         $truyen = new truyen();
         $truyen->tentruyen = $data['tentruyen'];
         $truyen->slug_truyen = $data['slug_truyen'];
         $truyen->tomtat = $data['tomtat'];
+        $truyen->tacgia = $data['tacgia'];
         $truyen->kichhoat = $data['kichhoat'];
         $truyen->danhmuc_id = $data['danhmuc'];
 
@@ -113,6 +117,7 @@ class TruyenController extends Controller
         $data = $request->validate(
             [
                 'tentruyen' => 'required|max:255',
+                'tacgia'=> 'required',
                 'tomtat' => 'max:255',
                 'slug_truyen' => 'required',
                 'kichhoat' => 'required',
@@ -121,12 +126,14 @@ class TruyenController extends Controller
             [
                 'tentruyen.unique' => 'Tên truyện đã được chọn, xin điền tên khác',
                 'slug_truyen.unique' => 'Slug trùng điền slug khác',
+                'tacgia.required' => 'Tác giả phải có nhé',
             ]
         );
         $truyen = Truyen::find($id);
         $truyen->tentruyen = $data['tentruyen'];
         $truyen->slug_truyen = $data['slug_truyen'];
         $truyen->tomtat = $data['tomtat'];
+        $truyen->tacgia = $data['tacgia'];
         $truyen->kichhoat = $data['kichhoat'];
         $truyen->danhmuc_id = $data['danhmuc'];
 

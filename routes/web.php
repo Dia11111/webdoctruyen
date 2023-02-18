@@ -20,11 +20,13 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', [indexController::class, 'home']);
-Route::get('/doc-truyen/{id}', [indexController::class, 'doctruyen'])->name('doctruyen');
+Route::get('/danh-muc/{slug}', [indexController::class, 'danhmuc']);
+
+Route::get('/xem-truyen/{slug}', [indexController::class, 'xemtruyen']);
 
 Auth::routes();
 
-Route::get('/home', [indexController::class, 'index'])->name('home');
+Route::get('/home', [indexController::class, 'home'])->name('home');
 
 Route::resource('/danhmuc', DanhmucController::class);
 Route::resource('/truyen', TruyenController::class);

@@ -3,16 +3,35 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\DanhmucTruyen;
+use App\Models\Truyen;
+use App\Models\Chapter;
 
 class indexController extends Controller
 {
     //
     public function home() {
-        return view('pages.home');
+        $danhmuc = DanhmucTruyen:: orderBy('id','DESC')->get();
+        $truyen = Truyen:: orderBy('id','DESC')->where('kichhoat', 0)->get();
+        return view('pages.home')->with(compact('danhmuc','truyen'));
     }
 
-    public function doctruyen()
+    public function danhmuc($slug)
     {
-        return view('pages.truyen');
+        $danhmuc = DanhmucTruyen:: orderBy('id','DESC')->get();
+
+        $danhmuc_id = DanhmucTruyen::where('slug_danhmuc',$slug)->first();
+
+        $truyen = Truyen:: orderBy('id','DESC')->where('kichhoat', 0)->where('danhmuc_id',$danhmuc_id->id)->get();
+        return view('pages.danhmuc')->with(compact('danhmuc','truyen', 'tendanhmuc'));
+    }
+    public function xemtruyen($slug)
+    {
+        $danhmuc = DanhmucTruyen::orderBy('id','DESC')->get();
+        $truyen = Truyen::with('danhmuctruyen')->where('slug_truyen', $slug)->where('kichhoat', 0)->first();
+        $chapter = Chapter::with('truyen')->orderBy('id','DESC')->where('truyen_id',$truyen->id)->get();
+        $cungdanhmuc = Truyen::with('danhmuctruyen')->where('danhmuc_id',$truyen->danhmuctruyen->id)->whereNotIn('id',[$truyen->id])->get();
+
+        return view('pages.truyen')->with(compact('danhmuc','truyen', 'chapter','cungdanhmuc'));
     }
 }

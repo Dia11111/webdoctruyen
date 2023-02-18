@@ -34,6 +34,11 @@
                                 placeholder="Tên truyện...">
                         </div>
                         <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Tác giả</label>
+                            <input type="text" class="form-control" value="{{$truyen->tacgia}}" name="tacgia" aria-describedby="emailHelp"
+                                placeholder="Tác giả...">
+                        </div>
+                        <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Slug truyện</label>
                             <input type="text" class="form-control" value="{{$truyen->slug_truyen}}" name="slug_truyen"
                                 id="convert_slug" aria-describedby="emailHelp" placeholder="Slug truyện...">

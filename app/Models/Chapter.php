@@ -18,6 +18,6 @@ class Chapter extends Model
     protected $table = 'chapter';
 
     public function truyen() {
-        return $this->BelongsTo('App\Models\Truyen','truyen_id','id');
+        return $this->BelongsTo('App\Models\Truyen');
     }
 }
