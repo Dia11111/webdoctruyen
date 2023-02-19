@@ -79,6 +79,13 @@
             @yield('content')
         </main>
     </div>
+    {{-- CKeditor --}}
+    <script src="//cdn.ckeditor.com/4.20.2/full/ckeditor.js"></script>
+    <script type="text/javascript">
+        CKEDITOR.replace('noidung_chapter');
+    </script>
+
+    {{-- Slug --}}
     <script type="text/javascript">
  
     function ChangeToSlug()

@@ -44,7 +44,7 @@
 
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Nội dung chapter</label>
-                            <textarea name="noidung" class="form-control" rows="5" style="resize: none"></textarea>
+                            <textarea name="noidung"  id="noidung_chapter" class="form-control" rows="5" style="resize: none"></textarea>
                         </div>
 
                         <div class="mb-3">

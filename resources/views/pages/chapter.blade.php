@@ -13,16 +13,18 @@
         <p>Chương hiện tại: {{$chapter->tieude}}</p>
         <p>Tóm tắt: {{$chapter->tomtat}}</p>
         <div class="col-md-5">
-            <div class="mb-3">
+            <p class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Chọn chương</label>
+                <p><a class="btn btn-primary" href="">Tập trước</a></p>
                 <select name="select-chapter" class="form-select select-chapter" aria-label="Default select example">
                     @foreach($all_chapter as $key => $chap)
                     <option value="{{url('xem-chapter/' .$chap->slug_chapter)}}">{{$chap->tieude}}</option>
                     @endforeach
                 </select>
+                <p class="mt-3"><a class="btn btn-primary" href="">Tập sau</a></p>
             </div>
-            
         </div>
+        
         <div class="noidungchuong">
             {!! $chapter->noidung !!}
 
