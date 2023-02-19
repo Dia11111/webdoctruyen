@@ -22,6 +22,8 @@ class indexController extends Controller
 
         $danhmuc_id = DanhmucTruyen::where('slug_danhmuc',$slug)->first();
 
+        $tendanhmuc = $danhmuc_id->tendanhmuc;
+
         $truyen = Truyen:: orderBy('id','DESC')->where('kichhoat', 0)->where('danhmuc_id',$danhmuc_id->id)->get();
         return view('pages.danhmuc')->with(compact('danhmuc','truyen', 'tendanhmuc'));
     }
@@ -29,9 +31,19 @@ class indexController extends Controller
     {
         $danhmuc = DanhmucTruyen::orderBy('id','DESC')->get();
         $truyen = Truyen::with('danhmuctruyen')->where('slug_truyen', $slug)->where('kichhoat', 0)->first();
-        $chapter = Chapter::with('truyen')->orderBy('id','DESC')->where('truyen_id',$truyen->id)->get();
+        $chapter = Chapter::with('truyen')->orderBy('id','ASC')->where('truyen_id',$truyen->id)->get();
+        $chapter_dau = Chapter::with('truyen')->orderBy('id','ASC')->where('truyen_id',$truyen->id)->first();
         $cungdanhmuc = Truyen::with('danhmuctruyen')->where('danhmuc_id',$truyen->danhmuctruyen->id)->whereNotIn('id',[$truyen->id])->get();
 
-        return view('pages.truyen')->with(compact('danhmuc','truyen', 'chapter','cungdanhmuc'));
+        return view('pages.truyen')->with(compact('danhmuc','truyen', 'chapter','cungdanhmuc','chapter_dau'));
+    }
+
+    public function xemchapter($slug){
+        $danhmuc = DanhmucTruyen::orderBy('id','DESC')->get();
+        $truyen = Chapter::where('slug_chapter',$slug)->first();
+        $chapter = Chapter::with('truyen')->where('slug_chapter',$slug)->where('truyen_id',$truyen->truyen_id)->first();
+        $all_chapter = Chapter::with('truyen')->orderBy('id','ASC')->where('truyen_id', $truyen->truyen_id)->get();
+
+        return view('pages.chapter')->with(compact('danhmuc','chapter','all_chapter'));
     }
 }

@@ -26,7 +26,12 @@
                     <li>Số chapter: 200</li>
                     <li>Số lượt xem: 2000</li>
                     <li><a href="#">Xem mục lục</a></li>
-                    <li><a href="#" class="btn btn-primary">Đọc online</a></li>
+                    
+                    @if($chapter_dau)
+                    <li><a href="{{url('xem-chapter/' .$chapter_dau->slug_chapter)}}" class="btn btn-primary">Đọc online</a></li>
+                    @else
+                    <li><a class="btn btn-danger">Chưa có chương để đọc</a></li>
+                    @endif
                 </ul>
             </div>
         </div>
