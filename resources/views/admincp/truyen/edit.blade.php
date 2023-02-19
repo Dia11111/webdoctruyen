@@ -7,7 +7,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Cập nhật truyện truyện</div>
+                <div class="card-header">Cập nhật truyện</div>
                 @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -56,6 +56,18 @@
                                 @foreach ($danhmuc as $key => $muc)
                                 <option {{$muc-> id == $truyen->danhmuc_id ? 'selected' : ''}} value="{{$muc->id}}">
                                     {{$muc->tendanhmuc}}
+                                </option>
+                                @endforeach
+
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Thể loại truyện</label>
+                            <select name="theloai" class="form-select">
+                                @foreach ($theloai as $key => $the)
+                                <option {{$the-> id == $truyen->theloai_id ? 'selected' : ''}} value="{{$the->id}}">
+                                    {{$the->tentheloai}}
                                 </option>
                                 @endforeach
 

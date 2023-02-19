@@ -13,15 +13,27 @@
         <p>Chương hiện tại: {{$chapter->tieude}}</p>
         <p>Tóm tắt: {{$chapter->tomtat}}</p>
         <div class="col-md-5">
+            <style type="text/css">
+                .isDisabled{
+                    color: currentColor;
+                    pointer-events: none;
+                    opacity: 0.5;
+                    text-decoration: none;
+                }
+            </style>
             <p class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Chọn chương</label>
-                <p><a class="btn btn-primary" href="">Tập trước</a></p>
+
+                <p><a class="btn btn-primary {{$chapter->id==$min_id->id ? 'isDisabled' : ''}}" href="{{url('xem-chapter/' .$previous_chapter)}}">Tập trước</a></p>
+
                 <select name="select-chapter" class="form-select select-chapter" aria-label="Default select example">
                     @foreach($all_chapter as $key => $chap)
                     <option value="{{url('xem-chapter/' .$chap->slug_chapter)}}">{{$chap->tieude}}</option>
                     @endforeach
                 </select>
-                <p class="mt-3"><a class="btn btn-primary" href="">Tập sau</a></p>
+                
+                <p class="mt-3"><a class="btn btn-primary {{$chapter->id==$max_id->id ? 'isDisabled' : ''}}" href="{{url('xem-chapter/' .$next_chapter)}}">Tập sau</a></p>
+
             </div>
         </div>
         

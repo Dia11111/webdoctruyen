@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TheloaiController;
 use App\Http\Controllers\ChapterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -31,3 +32,4 @@ Route::get('/home', [indexController::class, 'home'])->name('home');
 Route::resource('/danhmuc', DanhmucController::class);
 Route::resource('/truyen', TruyenController::class);
 Route::resource('/chapter', ChapterController::class);
+Route::resource('/theloai', TheloaiController::class);
