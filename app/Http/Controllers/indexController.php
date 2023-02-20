@@ -10,7 +10,7 @@ use App\Models\Theloai;
 
 class indexController extends Controller
 {
-    //ểtteterterterte
+    //hello kiet
     public function home() {
         $danhmuc = DanhmucTruyen:: orderBy('id','DESC')->get();
         $truyen = Truyen:: orderBy('id','DESC')->where('kichhoat', 0)->get();
