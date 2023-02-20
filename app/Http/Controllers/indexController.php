@@ -6,10 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\DanhmucTruyen;
 use App\Models\Truyen;
 use App\Models\Chapter;
+use App\Models\Theloai;
 
 class indexController extends Controller
 {
-    //
+    //ểtteterterterte
     public function home() {
         $danhmuc = DanhmucTruyen:: orderBy('id','DESC')->get();
         $truyen = Truyen:: orderBy('id','DESC')->where('kichhoat', 0)->get();
