@@ -10,7 +10,7 @@ use App\Models\Theloai;
 
 class indexController extends Controller
 {
-    //
+
     public function home() {
         $theloai = Theloai:: orderBy('id','DESC')->get();
 
@@ -19,6 +19,7 @@ class indexController extends Controller
         $truyen = Truyen:: orderBy('id','DESC')->where('kichhoat', 0)->get();
 
         return view('pages.home')->with(compact('danhmuc','truyen','theloai'));
+
     }
 
     public function danhmuc($slug)
@@ -27,7 +28,7 @@ class indexController extends Controller
 
         $danhmuc = DanhmucTruyen:: orderBy('id','DESC')->get();
 
-        $danhmuc_id = DanhmucTruyen::where('slug_danhmuc',$slug)->first();
+        $danhmuc_id = DanhmucTruyen::where('slug_danhmuc', $slug)->first();
 
         $tendanhmuc = $danhmuc_id->tendanhmuc;
 
@@ -54,9 +55,9 @@ class indexController extends Controller
         $theloai = Theloai:: orderBy('id','DESC')->get();
         $danhmuc = DanhmucTruyen::orderBy('id','DESC')->get();
         $truyen = Truyen::with('danhmuctruyen')->where('slug_truyen', $slug)->where('kichhoat', 0)->first();
-        $chapter = Chapter::with('truyen')->orderBy('id','ASC')->where('truyen_id',$truyen->id)->get();
-        $chapter_dau = Chapter::with('truyen')->orderBy('id','ASC')->where('truyen_id',$truyen->id)->first();
-        $cungdanhmuc = Truyen::with('danhmuctruyen')->where('danhmuc_id',$truyen->danhmuctruyen->id)->whereNotIn('id',[$truyen->id])->get();
+        $chapter = Chapter::with('truyen')->orderBy('id', 'ASC')->where('truyen_id', $truyen->id)->get();
+        $chapter_dau = Chapter::with('truyen')->orderBy('id', 'ASC')->where('truyen_id', $truyen->id)->first();
+        $cungdanhmuc = Truyen::with('danhmuctruyen')->where('danhmuc_id', $truyen->danhmuctruyen->id)->whereNotIn('id', [$truyen->id])->get();
 
         return view('pages.truyen')->with(compact('danhmuc','truyen', 'chapter','cungdanhmuc','chapter_dau','theloai'));
     }
@@ -68,12 +69,13 @@ class indexController extends Controller
         $chapter = Chapter::with('truyen')->where('slug_chapter',$slug)->where('truyen_id',$truyen->truyen_id)->first();
         $all_chapter = Chapter::with('truyen')->orderBy('id','ASC')->where('truyen_id', $truyen->truyen_id)->get();
 
-        $max_id = Chapter::where('truyen_id', $truyen->truyen_id)->orderBy('id','DESC')->first();
-        $min_id = Chapter::where('truyen_id', $truyen->truyen_id)->orderBy('id','ASC')->first();
+        $max_id = Chapter::where('truyen_id', $truyen->truyen_id)->orderBy('id', 'DESC')->first();
+        $min_id = Chapter::where('truyen_id', $truyen->truyen_id)->orderBy('id', 'ASC')->first();
 
-        $next_chapter = Chapter::where('truyen_id', $truyen->truyen_id)->where('id','>',$chapter->id)->min('slug_chapter');
-        $previous_chapter = Chapter::where('truyen_id', $truyen->truyen_id)->where('id','<',$chapter->id)->max('slug_chapter');
+        $next_chapter = Chapter::where('truyen_id', $truyen->truyen_id)->where('id', '>', $chapter->id)->min('slug_chapter');
+        $previous_chapter = Chapter::where('truyen_id', $truyen->truyen_id)->where('id', '<', $chapter->id)->max('slug_chapter');
 
         return view('pages.chapter')->with(compact('danhmuc','chapter','all_chapter','next_chapter','previous_chapter','max_id','min_id','theloai'));
+
     }
 }
