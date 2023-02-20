@@ -9,7 +9,7 @@
     <div class="album py-5 bg-light">
         <div class="container">
             <div class="d-flex justify-content-between mb-2">
-                <h3>{{$tendanhmuc}}</h3> 
+                <h3>{{$tentheloai}}</h3> 
                 <a class="btn btn-success" href="">Xem tất cả</a>
             </div>
 

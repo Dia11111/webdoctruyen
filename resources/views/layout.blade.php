@@ -52,7 +52,9 @@
                                 Thể Loại
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Action</a>
+                                @foreach($theloai as $key => $the)
+                                <a class="dropdown-item" href="{{url('the-loai/' .$the->slug_theloai)}}">{{$the->tentheloai}}</a>
+                                @endforeach
                             </div>
                         </li>
                         
