@@ -4,9 +4,14 @@
 @endsection --}}
 @section('content')
 {{-- ======================SACH MOI ==================================== --}}
-
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{url('/')}}">Trang chủ</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{$tendanhmuc}}</li>
+    </ol>
+</nav>
 <div class="row">
-    <div class="album py-5 bg-light">
+    <div class="album py-3 bg-light">
         <div class="container">
             <div class="d-flex justify-content-between mb-2">
                 <h3>{{$tendanhmuc}}</h3> 

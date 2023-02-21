@@ -23,7 +23,7 @@
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Truyenmanga.com</a>
+                <a class="navbar-brand" href="{{url('/')}}">Truyenmanga.com</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -59,10 +59,13 @@
                         </li>
                         
                     </ul>
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
+                        <form autocomplete="off" class="d-flex" action="{{url('tim-kiem')}}">
+                            @csrf
+                            <input class="form-control me-2" type="search" id="keywords" name="tukhoa" placeholder="Tìm kiếm..." aria-label="Search">
+                            <div id="search_ajax"></div>
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form>
+                    
                 </div>
             </div>
         </nav>
@@ -81,9 +84,37 @@
     </div>
 
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
     <script src="{{ asset('js/owl.carousel.js') }}"></script>
     
+    <script type="text/javascript">
+        $('#keywords').keyup( function() {
+            var keywords = $(this).val();
+            
+                if(keywords !='')
+                {
+                    var _token = $('input[name="_token"]').val();
+
+                    $.ajax({
+                        url:"{{url('/timkiem-ajax')}}",
+                        method:"POST",
+                        data:{keywords:keywords, _token:_token},
+                        success:function(data){
+                            $('#search_ajax').fadeIn();
+                            $('#search_ajax').html(data);
+                        }
+                    });
+                }else{
+                    $('#search_ajax').fadeOut();
+                }
+        });
+
+        $(document).on('click','.li_search_ajax', function(){
+            $('#keywords').val($(this).text());
+            $('#search_ajax').fadeOut();
+        });
+
+    </script>
 
     <script type="text/javascript">
         $('.owl-carousel').owlCarousel({

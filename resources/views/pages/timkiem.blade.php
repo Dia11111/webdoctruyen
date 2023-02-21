@@ -3,20 +3,18 @@
 @include('pages.slide')
 @endsection --}}
 @section('content')
-{{-- ======================SACH MOI ==================================== --}}
+
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{url('/')}}">Trang chủ</a></li>
-        <li class="breadcrumb-item active" aria-current="page">{{$tentheloai}}</li>
+        <li class="breadcrumb-item active" aria-current="page">Tìm kiếm</li>
     </ol>
 </nav>
-
 <div class="row">
     <div class="album py-3 bg-light">
         <div class="container">
             <div class="d-flex justify-content-between mb-2">
-                <h3>{{$tentheloai}}</h3> 
-                <a class="btn btn-success" href="">Xem tất cả</a>
+                <h3>Bạn đang tìm kiếm với từ khóa: {{$tukhoa}}</h3> 
             </div>
 
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
@@ -28,7 +26,7 @@
                         <div class="card mb-12 box-shadow">
 
                             <div class="card-body">
-                                <p>Truyện đang cập nhật...</p>
+                                <p>Không tìm thấy truyện...</p>
                             </div>
                         </div>
                     </div>
@@ -58,6 +56,5 @@
         </div>
     </div>
 </div>
-{{-- ======================SACH HAY XEM NHIEU ==================================== --}}
 
 @endsection

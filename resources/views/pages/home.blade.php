@@ -17,7 +17,7 @@
                 @foreach($truyen as $key => $value)
                 <div class="col-md-3">
                     <div class="card shadow-sm">
-                        <img class="card-img-top" src="{{asset('public/uploads/truyen/' .$value->hinhanh)}}">
+                        <img class="card-img-top rounded-3" width="350" height="350" src="{{asset('public/uploads/truyen/' .$value->hinhanh)}}">
                         <div class="card-body">
                             <h5>{{$value->tentruyen}}</h5>
                             <p class="card-text">{{$value->tomtat}}</p>
