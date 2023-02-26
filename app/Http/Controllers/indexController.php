@@ -13,12 +13,12 @@ class indexController extends Controller
     public function timkiem_ajax(Request $request){
         $data = $request->all();
         if($data['keywords']){
-            $truyen = Truyen::where('kichhoat',0)->where('tentruyen','LIKE','%'.$data['keywords'].'%')->get();
+            $truyen = Truyen::where('tinhtrang',0)->where('tentruyen','LIKE','%'.$data['keywords'].'%')->get();
 
             $output = '<ul class="dropdown-menu" style="display:block;">';
 
             foreach($truyen as $key => $tr){
-                $output .= '<li class="li_search_ajax"><a href="#">'.$tr->tentruyen.'</a></li>';
+                $output .= '<li class="li_search_ajax m-2 border "><a class="text-dark" href="#">'.$tr->tentruyen.'</a></li>';
             }
             $output .= '</ul>';
             echo $output;
@@ -78,9 +78,10 @@ class indexController extends Controller
         $truyen = Truyen::with('danhmuctruyen','theloai')->where('slug_truyen', $slug)->where('kichhoat', 0)->first();
         $chapter = Chapter::with('truyen')->orderBy('id', 'ASC')->where('truyen_id', $truyen->id)->get();
         $chapter_dau = Chapter::with('truyen')->orderBy('id', 'ASC')->where('truyen_id', $truyen->id)->first();
+        $chapter_cuoi = Chapter::with('truyen')->orderBy('id', 'DESC')->where('truyen_id', $truyen->id)->first();
         $cungdanhmuc = Truyen::with('danhmuctruyen','theloai')->where('danhmuc_id', $truyen->danhmuctruyen->id)->whereNotIn('id', [$truyen->id])->get();
 
-        return view('pages.truyen')->with(compact('danhmuc','truyen', 'chapter','cungdanhmuc','chapter_dau','theloai','slide_truyen'));
+        return view('pages.truyen')->with(compact('danhmuc','truyen', 'chapter','cungdanhmuc','chapter_dau','theloai','slide_truyen','chapter_cuoi'));
     }
 
     public function xemchapter($slug){
@@ -104,7 +105,7 @@ class indexController extends Controller
         $next_chapter = Chapter::where('truyen_id', $truyen->truyen_id)->where('id', '>', $chapter->id)->min('slug_chapter');
         $previous_chapter = Chapter::where('truyen_id', $truyen->truyen_id)->where('id', '<', $chapter->id)->max('slug_chapter');
 
-        return view('pages.chapter')->with(compact('danhmuc','chapter','all_chapter','next_chapter','previous_chapter','max_id','min_id','theloai','truyen_breadcrumb','slide_truyen'));
+        return view('pages.chapter')->with(compact('danhmuc','chapter','all_chapter','next_chapter','previous_chapter','max_id','min_id','theloai','truyen_breadcrumb','slide_truyen','truyen'));
 
     }
     public function timkiem(Request $request){
@@ -117,5 +118,21 @@ class indexController extends Controller
         $truyen = Truyen::with('danhmuctruyen','theloai')->where('tentruyen','LIKE','%'.$tukhoa.'%')->orwhere('tomtat','LIKE','%'.$tukhoa.'%')->orwhere('tacgia','LIKE','%'.$tukhoa.'%')->get();
 
         return view('pages.timkiem')->with(compact('danhmuc','truyen','theloai','slide_truyen','tukhoa'));
+    }
+
+    public function tag($tag){
+        $slide_truyen = Truyen::orderBy('id','DESC')->where('kichhoat', 0)->take(8)->get();
+        $theloai = Theloai:: orderBy('id','DESC')->get();
+        $danhmuc = DanhmucTruyen::orderBy('id','DESC')->get();
+
+        $tags = explode("-", $tag);
+
+        $truyen = Truyen::with('danhmuctruyen','theloai')->where(function($query) use($tags){
+            for($i=0; $i < count($tags); $i++){
+                $query->orwhere('tukhoa','LIKE','%' .$tags[$i] .'%');
+            }
+        })->paginate(12);
+
+        return view('pages.tag')->with(compact('danhmuc','truyen','theloai','slide_truyen','tag'));
     }
 }

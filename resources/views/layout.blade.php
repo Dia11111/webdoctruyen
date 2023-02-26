@@ -15,11 +15,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
         integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style type="text/css">
+        .switch_color {
+            background: #181818;
+            color: #fff;
+        }
+        .switch_color_light {
+            background: #181818 !important;
+            color: #fff;
+        }
+        .noidung_color{
+            color: #fff;
+        }
+    </style>    
+
 </head>
 
 
 <body>
-
+   
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
@@ -59,13 +73,16 @@
                         </li>
                         
                     </ul>
-                        <form autocomplete="off" class="d-flex" action="{{url('tim-kiem')}}">
+                        <form autocomplete="off" class="d-flex position-relative" action="{{url('tim-kiem')}}" method="POST">
                             @csrf
                             <input class="form-control me-2" type="search" id="keywords" name="tukhoa" placeholder="Tìm kiếm..." aria-label="Search">
-                            <div id="search_ajax"></div>
+                            <div id="search_ajax" class=" position-absolute top-100 mt-2 w-100"></div>
                             <button class="btn btn-outline-success" type="submit">Search</button>
                         </form>
-                    
+                    <select class="custom-select mr-sm-2" id="switch_color">
+                        <option value="xam">Xám</option>
+                        <option value="den">Đen</option>
+                    </select>
                 </div>
             </div>
         </nav>
@@ -77,16 +94,53 @@
                     <a href="#">Back to top</a>
                 </p>
                 <p class="mb-1"> Cổng Light Novel - Đọc Light Novel</p>
-                <p class="mb-0">New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a
-                        href="/docs/5.3/getting-started/introduction/">getting started guide</a>.</p>
+                <p class="mb-0">@Copyright ManhuaTeam.</p>
             </div>
         </footer>
     </div>
-
+   
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
     <script src="{{ asset('js/owl.carousel.js') }}"></script>
     
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            if(localStorage.getItem('switch_color')!==null){
+                const data = localStorage.getItem('switch_color');
+                const data_obj = JSON.parse(data);
+                $(document.body).addClass(data_obj.class_1);
+                $('.album').addClass(data_obj.class_2);
+                $('.card-body').addClass(data_obj.class_1);
+                $('ul.mucluctruyen > li > a').css('color','#fff');
+                $('.sidebar > a').css('color','#000');
+
+                $("select option[value = 'den']").attr("selected","selected");
+            }
+        
+
+            $("#switch_color").change(function(){
+                $(document.body).toggleClass('switch_color');
+                $('.album').toggleClass('switch_color_light');
+                $('.card-body').toggleClass('switch_color');
+                $('.noidungchuong').toggleClass('noidung_color');
+                $('ul.mucluctruyen > li > a').css('color','#fff');
+                $('.sidebar > a').css('color','#000');
+                if($(this).val()=='den'){
+                    var item = {
+                        'class_1':'switch_color',
+                        'class_2':'switch_color_light'
+                    }
+                    localStorage.setItem('switch_color', JSON.stringify(item));
+                }else if($(this).val()=='xam'){ 
+                    localStorage.removeItem('switch_color');
+                    $('ul.mucluctruyen > li > a').css('color','#000');
+                }    
+                });
+        });
+        
+    </script>
+
     <script type="text/javascript">
         $('#keywords').keyup( function() {
             var keywords = $(this).val();
@@ -150,6 +204,10 @@
             var url = window.location.href;
             $('.select-chapter').find('option[value="'+url+'"]').attr("selected", true);
         }
+    </script>
+
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v16.0" nonce="pxTPSUAM">
     </script>
 </body>
 

@@ -33,6 +33,11 @@
                                 placeholder="Tên truyện...">
                         </div>
                         <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Từ khóa</label>
+                            <input type="text" class="form-control" value="{{old('tukhoa')}}" name="tukhoa" id="slug" aria-describedby="emailHelp"
+                                placeholder="Từ khóa...">
+                        </div>
+                        <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Tác giả</label>
                             <input type="text" class="form-control" value="{{old('tacgia')}}" name="tacgia" aria-describedby="emailHelp"
                                 placeholder="Tác giả...">
@@ -74,6 +79,14 @@
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Hình ảnh truyện</label>
                             <input type="file" class="form-control-file" name="hinhanh">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Tình trạng</label>
+                            <select name="tinhtrang" class="form-select" aria-label="Default select example">
+                                <option value="0">Đang hoạt động</option>
+                                <option value="1">Không hoạt động</option>
+                            </select>
                         </div>
 
                         <div class="mb-3">

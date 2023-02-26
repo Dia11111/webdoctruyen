@@ -5,7 +5,7 @@
 @include('layouts.nav')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-header">Liệt kê chapter truyện</div>
 
@@ -23,6 +23,8 @@
                             <th scope="col">Slug chapter</th>
                             <th scope="col">Tóm tắt</th>
                             <th scope="col">Thuộc truyện</th>
+                            <th scope="col">Ngày tạo</th>
+                            <th scope="col">Ngày cập nhật</th>
                             <th scope="col">Kích hoạt</th>
                             </tr>
                         </thead>
@@ -35,12 +37,23 @@
                             <td>{{$chapter->tomtat}}</td>
                             <td>{{$chapter->truyen->tentruyen}}</td>
                             <td>
+                                @if($chapter->created_at !='')
+                                {{$chapter->created_at}} - {{$chapter->created_at->diffForHumans()}}
+                                @endif
+                            </td>
+                            <td> 
+                                @if($chapter->updated_at !='')
+                                {{$chapter->updated_at}} - {{$chapter->updated_at->diffForHumans()}}
+                                @endif
+                            </td>
+                            <td>
                                 @if($chapter->kichhoat==0)
                                     <span class="text text-success">Kích hoạt</span>
                                 @else
                                     <span class="text text-danger">Không kích hoạt</span>
                                 @endif
                             </td>
+                            
                             <td>
                                 <a href="{{route('chapter.edit',[$chapter->id])}}" class="btn btn-primary">Edit</a>
 

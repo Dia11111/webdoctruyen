@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DanhmucTruyen;
 use App\Models\Truyen;
 use App\Models\Theloai;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TruyenController extends Controller
@@ -42,12 +43,14 @@ class TruyenController extends Controller
     {
         $data = $request->validate(
             [
-                'tentruyen' => 'required|max:255',
+                'tentruyen' => 'required|unique:truyen|max:255',
+                'tukhoa' => 'required',
                 'tacgia'=> 'required',
-                'tomtat' => 'max:255',
-                'hinhanh' => 'required | mimes:jpeg,jpg,png,svg,gif,jpeg | max:2048',
-                'slug_truyen' => 'required',
+                'tomtat' => 'required',
+                'hinhanh' => 'required|image|mimes:jpeg,jpg,png,svg,gif,jpeg | max:2048',
+                'slug_truyen' => 'required|unique:truyen|max:255',
                 'kichhoat' => 'required',
+                'tinhtrang' => 'required',
                 'danhmuc' => 'required',
                 'theloai' => 'required',
             ],
@@ -55,18 +58,23 @@ class TruyenController extends Controller
                 'tentruyen.unique' => 'Tên truyện đã được chọn, xin điền tên khác',
                 'slug_truyen.unique' => 'Slug trùng điền slug khác',
                 'tentruyen.required' => 'Tên truyện phải có nhé',
+                'tukhoa.required' => 'Từ khóa phải có nhé',
                 'hinhanh.required' => 'Hình ảnh hải có',
                 'tacgia.required' => 'Tác giả phải có nhé',
             ]
         );
         $truyen = new truyen();
         $truyen->tentruyen = $data['tentruyen'];
+        $truyen->tukhoa = $data['tukhoa'];
         $truyen->slug_truyen = $data['slug_truyen'];
         $truyen->theloai_id = $data['theloai'];
         $truyen->tomtat = $data['tomtat'];
         $truyen->tacgia = $data['tacgia'];
         $truyen->kichhoat = $data['kichhoat'];
+        $truyen->tinhtrang = $data['tinhtrang'];
         $truyen->danhmuc_id = $data['danhmuc'];
+
+        $truyen->created_at = Carbon::now('Asia/Ho_Chi_Minh');
 
         $get_image = $request->hinhanh;
         $path = 'public/uploads/truyen/';
@@ -122,16 +130,19 @@ class TruyenController extends Controller
         $data = $request->validate(
             [
                 'tentruyen' => 'required|max:255',
+                'tukhoa' => 'required',
                 'tacgia'=> 'required',
-                'tomtat' => 'max:255',
+                'tomtat' => 'required',
                 'slug_truyen' => 'required|max:255',
                 'kichhoat' => 'required',
+                'tinhtrang' => 'required',
                 'danhmuc' => 'required',
                 'theloai' => 'required',
             ],
             [
                 'tentruyen.unique' => 'Tên truyện đã được chọn, xin điền tên khác',
                 'slug_truyen.unique' => 'Slug trùng điền slug khác',
+                'tukhoa.required' => 'Từ khóa phải có nhé',
                 'tacgia.required' => 'Tác giả phải có nhé',
                 'tentruyen.required' => 'Tên truyện phải có nhé',
                 'tomtat.required' => 'Tóm tắt phải có nhé',
@@ -139,12 +150,16 @@ class TruyenController extends Controller
         );
         $truyen = Truyen::find($id);
         $truyen->tentruyen = $data['tentruyen'];
+        $truyen->tukhoa = $data['tukhoa'];
         $truyen->slug_truyen = $data['slug_truyen'];
         $truyen->theloai_id = $data['theloai'];
         $truyen->tomtat = $data['tomtat'];
         $truyen->tacgia = $data['tacgia'];
         $truyen->kichhoat = $data['kichhoat'];
+        $truyen->tinhtrang = $data['tinhtrang'];
         $truyen->danhmuc_id = $data['danhmuc'];
+
+        $truyen->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
 
         $get_image = $request->hinhanh;
         if ($get_image) {

@@ -16,11 +16,11 @@
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 @foreach($truyen as $key => $value)
                 <div class="col-md-3">
-                    <div class="card shadow-sm">
+                    <div class="card shadow-sm h-100">
                         <img class="card-img-top rounded-3" width="350" height="350" src="{{asset('public/uploads/truyen/' .$value->hinhanh)}}">
                         <div class="card-body">
                             <h5>{{$value->tentruyen}}</h5>
-                            <p class="card-text">{{$value->tomtat}}</p>
+                            <p class="card-text text-truncate">{{$value->tomtat}}</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <a href="{{url('xem-truyen/' .$value->slug_truyen)}}" class="btn btn-sm btn-outline-secondary">Đọc ngay</a>

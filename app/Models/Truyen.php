@@ -8,9 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Truyen extends Model
 {
     use HasFactory;
+    protected $dates = [
+        'created_at',
+        'updated_at',
+    ];
     public $timestamps = false; //set time to false
     protected $fillable = [
-        'tentruyen', 'tomtat', 'danhmuc_id', 'hinhanh', 'slug_truyen', 'kichhoat','theloai_id'
+        'tentruyen','tukhoa', 'tomtat', 'danhmuc_id', 'hinhanh', 'slug_truyen', 'kichhoat','theloai_id','created_at', 'updated_at'
     ];
     protected $primaryKey = 'id';
     protected $table = 'truyen';

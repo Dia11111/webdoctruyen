@@ -20,12 +20,16 @@
                             <tr>
                             <th scope="col">#</th>
                             <th scope="col">Tên truyện</th>
+                            <th scope="col">Từ khóa</th>
                             <th scope="col">Hình ảnh</th>
                             <th scope="col">Slug truyện</th>
                             <th scope="col">Tóm tắt</th>
                             <th scope="col">Danh mục</th>
                             <th scope="col">Thể loại</th>
+                            <th scope="col">Tình trạng</th>
                             <th scope="col">Kích hoạt</th>
+                            <th scope="col">Ngày tạo</th>
+                            <th scope="col">Ngày cập nhật</th>
                             <th scope="col">Quản lý</th>
                             </tr>
                         </thead>
@@ -34,16 +38,34 @@
                             <tr>
                             <th scope="row">{{$key}}</th>
                             <td>{{$truyen->tentruyen}}</td>
-                            <td><img src="{{asset('public/uploads/truyen/'.$truyen->hinhanh)}}" height="300" width="150" alt=""></td>
+                            <td>{{$truyen->tukhoa}}</td>
+                            <td><img src="{{asset('public/uploads/truyen/'.$truyen->hinhanh)}}" height="250" width="180"></td>
                             <td>{{$truyen->slug_truyen}}</td>
                             <td>{{$truyen->tomtat}}</td>
                             <td>{{$truyen->danhmuctruyen->tendanhmuc}}</td>
                             <td>{{$truyen->theloai->tentheloai}}</td>
                             <td>
+                                @if($truyen->tinhtrang==0)
+                                    <span class="text text-success">Đang hoạt động</span>
+                                @else
+                                    <span class="text text-danger">Không hoạt động</span>
+                                @endif
+                            </td>
+                            <td>
                                 @if($truyen->kichhoat==0)
                                     <span class="text text-success">Kích hoạt</span>
                                 @else
                                     <span class="text text-danger">Không kích hoạt</span>
+                                @endif
+                            </td>
+                            <td>
+                                @if($truyen->created_at !='')
+                                {{$truyen->created_at}} - {{$truyen->created_at->diffForHumans()}}
+                                @endif
+                            </td>
+                            <td> 
+                                @if($truyen->updated_at !='')
+                                {{$truyen->updated_at}} - {{$truyen->updated_at->diffForHumans()}}
                                 @endif
                             </td>
                             <td>

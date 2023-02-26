@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Chapter;
 use App\Models\Truyen;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ChapterController extends Controller
@@ -63,6 +64,8 @@ class ChapterController extends Controller
         $chapter->tomtat = $data['tomtat'];
         $chapter->kichhoat = $data['kichhoat'];
         $chapter->truyen_id = $data['truyen_id'];
+
+        $chapter->created_at = Carbon::now('Asia/Ho_Chi_Minh');
 
         $chapter->save();
 
@@ -126,6 +129,8 @@ class ChapterController extends Controller
         $chapter->tomtat = $data['tomtat'];
         $chapter->kichhoat = $data['kichhoat'];
         $chapter->truyen_id = $data['truyen_id'];
+
+        $chapter->updated_at = Carbon::now('Asia/Ho_Chi_Minh');
 
         $chapter->save();
 
