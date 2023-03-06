@@ -20,11 +20,13 @@
             background: #181818;
             color: #fff;
         }
+
         .switch_color_light {
             background: #181818 !important;
             color: #fff;
         }
-        .noidung_color{
+
+        .noidung_color {
             color: #fff;
         }
     </style>
@@ -55,7 +57,8 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 @foreach($danhmuc as $key => $danh)
-                                <a class="dropdown-item" href="{{url('danh-muc/' .$danh->slug_danhmuc)}}">{{$danh->tendanhmuc}}</a>
+                                <a class="dropdown-item"
+                                    href="{{url('danh-muc/' .$danh->slug_danhmuc)}}">{{$danh->tendanhmuc}}</a>
                                 @endforeach
                             </div>
                         </li>
@@ -66,7 +69,8 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 @foreach($theloai as $key => $the)
-                                <a class="dropdown-item" href="{{url('the-loai/' .$the->slug_theloai)}}">{{$the->tentheloai}}</a>
+                                <a class="dropdown-item"
+                                    href="{{url('the-loai/' .$the->slug_theloai)}}">{{$the->tentheloai}}</a>
                                 @endforeach
                             </div>
                         </li>
@@ -76,16 +80,66 @@
                             <option value="den">Đen</option>
                         </select>
                     </ul>
-                        <form autocomplete="off" class="d-flex position-relative" action="{{url('tim-kiem')}}" method="POST">
-                            @csrf
-                            <input class="form-control me-2" type="search" id="keywords" name="tukhoa" placeholder="Tìm kiếm..." aria-label="Search">
-                            <div id="search_ajax" class=" position-absolute top-100 mt-2 w-100"></div>
-                            <button class="btn btn-outline-success" type="submit">Search</button>
-                        </form>
-                    
+                    <form autocomplete="off" class="d-flex position-relative" action="{{url('tim-kiem')}}"
+                        method="POST">
+                        @csrf
+                        <input class="form-control me-2" type="search" id="keywords" name="tukhoa"
+                            placeholder="Tìm kiếm..." aria-label="Search">
+                        <div id="search_ajax" class=" position-absolute top-100 mt-2 w-100"></div>
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <!-- Left Side Of Navbar -->
+                        <ul class="navbar-nav me-auto">
+
+                        </ul>
+
+                        <!-- Right Side Of Navbar -->
+                        <ul class="navbar-nav ms-auto">
+                            <!-- Authentication Links -->
+                            @guest
+                            @if (Route::has('login'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            </li>
+                            @endif
+
+                            @if (Route::has('register'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            </li>
+                            @endif
+                            @else
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->name }}
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                             document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
+                            @endguest
+                        </ul>
+                    </div>
+
                 </div>
             </div>
         </nav>
+        @if (session('messages'))
+        <div class="alert alert-danger" role="alert">
+            {{ session('messages') }}
+        </div>
+        @endif
+
         @yield('slide')
         @yield('content')
         <footer class="text-muted py-5">
@@ -125,7 +179,7 @@
                     <div class="col-md-5"><img class="img img-responsive" height="150" weight="150" with="100%" class="card-img-top" src="`+img+`" alt="`+title+`"></div>
                     <div class="col-md-7 sidebar">
                         <a href="`+url+`">
-                            <p>`+title+`</p>    
+                            <p>`+title+`</p>
                         </a>
                     </div>
                     </div>`
@@ -134,7 +188,7 @@
             }
                 }
             }
-        
+
         $('.btn-thich_truyen').click(function(){
             $('.fa.fa-heart').css('color', '#ffd700');
 
@@ -169,13 +223,13 @@
                 }else{
                     alert('Đã đạt tới giới hạn lưu truyện yêu thích.');
                 }
-                
+
                 $('#yeuthich').append(`
                 <div class ="row mt-2">
                     <div class="col-md-5"><img class="img img-responsive" height="150" weight="150" with="100%" class="card-img-top" src="`+img+`" alt="`+title+`"></div>
                     <div class="col-md-7 sidebar">
                         <a href="`+url+`">
-                            <p style="color:#666">`+title+`</p>    
+                            <p style="color:#666">`+title+`</p>
                         </a>
                     </div>
                     </div>
@@ -185,8 +239,8 @@
                 alert('Đã lưu vào danh sách truyện yêu thích.');
             }
             localStorage.setItem('wishlist_truyen', JSON.stringify(old_data));
-            
-            
+
+
         });
     </script>
     <script type="text/javascript">
@@ -293,7 +347,8 @@
     </script>
 
     <div id="fb-root"></div>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v16.0" nonce="pxTPSUAM">
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v16.0"
+        nonce="pxTPSUAM">
     </script>
 </body>
 

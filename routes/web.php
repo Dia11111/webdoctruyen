@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Redirect;
 Route::post('/convert', function () {
     if (isset($_POST['convert'])) {
         $text = strip_tags(request('text'));
-        $apiKey = 'USx1KXAU20T5dne9DwwBmoAKx4zxZESW';
+        $apiKey = '2HdKa6B7eF8RA3LhYy0IAgNevhMXM4ER';
 
         $curl = new Curl();
         $curl->setHeader('api-key', $apiKey);
@@ -53,6 +53,14 @@ Route::post('/convert', function () {
 
 //======================================================================
 
+//Admin
+Route::prefix("admin")->middleware('auth','isAdmin')->group(function () {
+    Route::resource('/danhmuc', DanhmucController::class);
+    Route::resource('/truyen', TruyenController::class);
+    Route::resource('/chapter', ChapterController::class);
+    Route::resource('/theloai', TheloaiController::class);
+});
+
 Route::get('/', [indexController::class, 'home']);
 Route::get('/danh-muc/{slug}', [indexController::class, 'danhmuc']);
 Route::get('/xem-truyen/{slug}', [indexController::class, 'xemtruyen']);
@@ -68,10 +76,7 @@ Auth::routes();
 
 Route::get('/home', [indexController::class, 'home'])->name('home');
 
-Route::resource('/danhmuc', DanhmucController::class);
-Route::resource('/truyen', TruyenController::class);
-Route::resource('/chapter', ChapterController::class);
-Route::resource('/theloai', TheloaiController::class);
-Route::get('/custom_error', function(){
+
+Route::get('/custom_error', function () {
     return Artisan::call('php artisan vendor:publish --tag=laravel-errors');
 });
