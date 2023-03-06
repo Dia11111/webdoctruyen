@@ -27,6 +27,7 @@
                             <th scope="col">Danh mục</th>
                             <th scope="col">Thể loại</th>
                             <th scope="col">Tình trạng</th>
+                            <th scope="col">Nổi bật</th>
                             <th scope="col">Kích hoạt</th>
                             <th scope="col">Ngày tạo</th>
                             <th scope="col">Ngày cập nhật</th>
@@ -43,7 +44,11 @@
                             <td>{{$truyen->slug_truyen}}</td>
                             <td>{{$truyen->tomtat}}</td>
                             <td>{{$truyen->danhmuctruyen->tendanhmuc}}</td>
-                            <td>{{$truyen->theloai->tentheloai}}</td>
+                            <td>
+                                @foreach($truyen->thuocnhieutheloaitruyen as $thuocloai)
+                                <span>{{$thuocloai->tentheloai}}</span>
+                                @endforeach
+                            </td>
                             <td>
                                 @if($truyen->tinhtrang==0)
                                     <span class="text text-success">Đang hoạt động</span>
@@ -56,6 +61,15 @@
                                     <span class="text text-success">Kích hoạt</span>
                                 @else
                                     <span class="text text-danger">Không kích hoạt</span>
+                                @endif
+                            </td>
+                            <td>
+                                @if($truyen->truyen_noibat==0)
+                                    <span class="text text-success">Truyện mới</span>
+                                @elseif($truyen->truyen_noibat==1)
+                                    <span class="text text-primary">Truyện nổi bật</span>
+                                @else
+                                    <span class="text text-danger">Truyện xem nhiều</span>
                                 @endif
                             </td>
                             <td>

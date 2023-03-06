@@ -4,13 +4,27 @@
 @endsection
 @section('content')
 {{-- ======================SACH MOI ==================================== --}}
+<style>
+    a.kytu {
+    text-decoration: none;
+    cursor: pointer;
+    padding: 5px 14px;
+    color: black;
+    background: aliceblue;
+}
+</style>
+<h3 class="title_truyen">Lọc truyện theo chữ cái</h3>
+@foreach(range('A','Z') as $char)
 
+    <a class="kytu" href="{{url('/kytu/'.$char)}}">{{$char}}</a>
+    
+@endforeach
 <div class="row">
     <div class="album py-5 bg-light">
         <div class="container">
             <div class="d-flex justify-content-between mb-2">
-                <h3>Truyện mới cập nhật</h3> 
-                <a class="btn btn-success" href="">Xem tất cả</a>
+                <h3>Truyện mới cập nhật</h3>
+                <a class="btn btn-success" href="#">Xem tất cả</a>
             </div>
 
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">

@@ -3,7 +3,9 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{url('/')}}">Trang chủ</a></li>
-        <li class="breadcrumb-item"><a href="{{url('the-loai/' .$truyen->theloai->slug_theloai)}}">{{$truyen->theloai->tentheloai}}</a></li>
+        @foreach($truyen->thuocnhieutheloaitruyen as $key => $breadcrumb_the)
+        <li class="breadcrumb-item"><a href="{{url('the-loai/' .$breadcrumb_the->slug_theloai)}}">{{$breadcrumb_the->tentheloai}}</a></li>
+        @endforeach
         <li class="breadcrumb-item"><a href="{{url('danh-muc/' .$truyen->danhmuctruyen->slug_danhmuc)}}">{{$truyen->danhmuctruyen->tendanhmuc}}</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{$truyen->tentruyen}}</li>
     </ol>
@@ -24,21 +26,35 @@
                     <div class="fb-share-button" data-href="{{\URL::current()}}" data-layout="button" data-size="small"><a target="_blank" 
                         href="{{\URL::current()}}&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Chia sẻ</a>
                     </div>
+
+                    <!--Lay bien wishlist-->
+                    <input type="hidden" value="{{$truyen->tentruyen}}" class="wishlist_title">
+                    <input type="hidden" value="{{\URL::current()}}" class="wishlist_url">
+                    <input type="hidden" value="{{$truyen->id}}" class="wishlist_id">
+                    <!--End lay bien wishlist-->
                     <li>Tên truyện: {{$truyen->tentruyen}}</li>
                     <li>Tác giả: {{$truyen->tacgia}}</li>
                     <li>Danh mục truyện: <a href="{{url('danh-muc/' .$truyen->danhmuctruyen->slug_danhmuc)}}">{{$truyen->danhmuctruyen->tendanhmuc}}</a></li>
-                    <li>Thể loại truyện: <a href="{{url('the-loai/' .$truyen->theloai->slug_theloai)}}">{{$truyen->theloai->tentheloai}}</a></li>
+                    <li>Thể loại truyện: 
+                        @foreach($truyen->thuocnhieutheloaitruyen as $thuocloai)
+                        <a href="{{url('the-loai/' .$thuocloai->slug_theloai)}}">{{$thuocloai->tentheloai}}</a>
+                        @endforeach
+                    </li>
                     <li>Số chapter: 200</li>
                     <li>Số lượt xem: 2000</li>
-                    <li><a href="#">Xem mục lục</a></li>
+                    <li><a class="xemmucluc" style="cursor: pointer;">Xem mục lục</a></li>
                     
                     @if($chapter_dau)
-                    <li><a href="{{url('xem-chapter/' .$chapter_dau->slug_chapter)}}" class="btn btn-primary">Đọc từ đầu</a></li>
+                    <li>
+                        <a href="{{url('xem-chapter/' .$chapter_dau->slug_chapter)}}" class="btn btn-primary">Đọc từ đầu</a>
+                        <a href="{{url('xem-chapter/' .$chapter_cuoi->slug_chapter)}}" class="btn btn-primary">Đọc mới nhất</a>
+                        
+                    </li>
 
-                    <li><a href="{{url('xem-chapter/' .$chapter_cuoi->slug_chapter)}}" class="btn btn-primary mt-2">Đọc mới nhất</a></li>
+                    <li><button class="btn btn-danger mt-2 btn-thich_truyen"><i class="fa fa-heart" aria-hidden="true"></i>Thích truyện</button></li>
                     @else
                     <li><a class="btn btn-danger">Chưa có chương để đọc</a></li>
-                    @endif
+                    @endif  
                 </ul>
             </div>
         </div>
@@ -114,6 +130,12 @@
             ul.mucluctruyen li a{
                 color: #000;
             }
+            .card-header{
+                background: darkgray !important;
+            }
+            .breadcrumb{
+                /* background: gray; */
+            }
         </style>
         <p>Từ khóa tìm kiếm:
             @php
@@ -136,7 +158,7 @@
                 @foreach($chapter as $key => $chap)
                 <li>
                     <a href="{{url('xem-chapter/'.$chap->slug_chapter)}}">{{$chap->tieude}}</a>
-                    <div class="chaster-time">22/2/2022</div>                  
+                    <div class="chaster-time">{{$chap->created_at->diffForHumans()}}</div>                  
                 </li>
                 @endforeach
                 
@@ -147,7 +169,7 @@
         </ul>
         
         <div class="fb-comments" data-href="https://developers.facebook.com/docs/plugins/comments#configurator" data-width="100%" data-numposts="10"></div>
-        <h4>Sách cùng mục</h4>
+        <h4 class="card-header">Sách cùng mục</h4>
         <div class="row">
             @foreach($cungdanhmuc as $key => $value)
                 <div class="col-md-3">
@@ -173,7 +195,36 @@
         </div>
     </div>
     <div class="col-md-3">
-        <h3>Sách hay xem nhiều</h3>
+        <h3 class="card-header">Truyện nổi bật</h3>
+        @foreach($truyennoibat as $key => $noibat)
+        <div class="row-mt-2">
+            <div class="col-md-5"><img class="img img-responsive" height="150" weight="150" with="100%" class="card-img-top" src="{{asset('public/uploads/truyen/'.$noibat->hinhanh)}}" alt="{{$noibat->tentruyen}}"></div>
+                <div class="col-md-7 sidebar">
+                    <a href="{{url('xem-truyen/'.$noibat->slug_truyen)}}">
+                        <p style="color:#666">{{$noibat->tentruyen}}</p>    
+                    </a>
+                </div>
+        </div>
+        @endforeach
+
+        <h3 class="card-header">Truyện xem nhiều</h3>
+        @foreach($truyenxemnhieu as $key => $xemnhieu)
+        <div class="row-mt-2">
+            <div class="col-md-5"><img class="img img-responsive" height="150" weight="150" with="100%" class="card-img-top" src="{{asset('public/uploads/truyen/'.$xemnhieu->hinhanh)}}" alt="{{$xemnhieu->tentruyen}}"></div>
+                <div class="col-md-7 sidebar">
+                    <a href="{{url('xem-truyen/'.$xemnhieu->slug_truyen)}}">
+                        <p style="color:#666">{{$xemnhieu->tentruyen}}</p>    
+                    </a>
+                </div>
+        </div>
+        @endforeach
+        
+        <h3 class="card-header title_truyen">Truyện yêu thích</h3>
+        <div id="yeuthich">
+                
+        </div>
     </div>
+    
+    
 </div>
 @endsection

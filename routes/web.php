@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DanhmucController;
 use App\Http\Controllers\indexController;
 use App\Http\Controllers\TruyenController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -26,6 +27,7 @@ Route::get('/xem-truyen/{slug}', [indexController::class, 'xemtruyen']);
 Route::get('/xem-chapter/{slug}', [indexController::class, 'xemchapter']);
 Route::get('/the-loai/{slug}', [indexController::class, 'theloai']);
 Route::get('/tag/{tag}', [indexController::class, 'tag']);
+Route::get('/kytu/{kytu}', [indexController::class, 'kytu']);
 
 Route::post('/tim-kiem', [indexController::class, 'timkiem']);
 Route::post('/timkiem-ajax', [indexController::class, 'timkiem_ajax']);
@@ -38,3 +40,6 @@ Route::resource('/danhmuc', DanhmucController::class);
 Route::resource('/truyen', TruyenController::class);
 Route::resource('/chapter', ChapterController::class);
 Route::resource('/theloai', TheloaiController::class);
+Route::get('/custom_error', function(){
+    return Artisan::call('php artisan vendor:publish --tag=laravel-errors');
+});

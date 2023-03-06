@@ -14,7 +14,7 @@ class Truyen extends Model
     ];
     public $timestamps = false; //set time to false
     protected $fillable = [
-        'tentruyen','tukhoa', 'tomtat', 'danhmuc_id', 'hinhanh', 'slug_truyen', 'kichhoat','theloai_id','created_at', 'updated_at'
+        'tentruyen','tukhoa', 'tomtat', 'danhmuc_id', 'hinhanh', 'slug_truyen', 'kichhoat','theloai_id','created_at', 'updated_at','truyen_noibat'
     ];
     protected $primaryKey = 'id';
     protected $table = 'truyen';
@@ -29,5 +29,9 @@ class Truyen extends Model
 
     public function theloai(){
         return $this->belongsTo('App\Models\Theloai','theloai_id','id');
+    }
+
+    public function thuocnhieutheloaitruyen(){
+        return $this->belongsToMany(Theloai::class,'thuocloai','truyen_id','theloai_id');
     }
 }

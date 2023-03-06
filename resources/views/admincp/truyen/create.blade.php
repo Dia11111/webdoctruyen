@@ -65,6 +65,16 @@
                         </div>
 
                         <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Thể loại</label><br>
+                            @foreach($theloai as $key => $the)
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox"  name="theloai[]" id="theloai_{{$the->id}}" value="{{$the->id}}">
+                                <label class="form-check-label" for="theloai_{{$the->id}}">{{$the->tentheloai}}</label>
+                            </div>
+                            @endforeach
+                        </div>
+                    
+                        {{-- <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Thể loại truyện</label>
                             <select name="theloai" class="form-select">
                                 @foreach ($theloai as $key => $the)
@@ -74,7 +84,7 @@
                                 @endforeach
 
                             </select>
-                        </div>
+                        </div> --}}
 
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Hình ảnh truyện</label>
@@ -86,6 +96,15 @@
                             <select name="tinhtrang" class="form-select" aria-label="Default select example">
                                 <option value="0">Đang hoạt động</option>
                                 <option value="1">Không hoạt động</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Truyện nổi bật/hot</label>
+                            <select name="truyennoibat" class="form-select" aria-label="Default select example">
+                                <option value="0">Truyện mới</option>
+                                <option value="1">Truyện nổi bật</option>
+                                <option value="2">Truyện xem nhiều</option>
                             </select>
                         </div>
 

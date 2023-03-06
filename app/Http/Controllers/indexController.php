@@ -10,6 +10,18 @@ use App\Models\Theloai;
 
 class indexController extends Controller
 {
+    public function kytu(Request $request, $kytu){
+        $theloai = Theloai:: orderBy('id','DESC')->get();
+
+        $slide_truyen = Truyen::orderBy('id','DESC')->where('kichhoat', 0)->take(8)->get();
+
+        $danhmuc = DanhmucTruyen:: orderBy('id','DESC')->get();
+
+        $truyen = Truyen::with('danhmuctruyen','thuocnhieutheloaitruyen')->where('tentruyen','LIKE',$kytu. '%')->orderBy('id','DESC')->where('kichhoat', 0)->paginate(12);
+        
+        return view('pages.kytu')->with(compact('danhmuc','truyen','theloai','slide_truyen')); 
+    }
+
     public function timkiem_ajax(Request $request){
         $data = $request->all();
         if($data['keywords']){
@@ -28,11 +40,11 @@ class indexController extends Controller
     public function home() {
         $theloai = Theloai:: orderBy('id','DESC')->get();
 
-        $slide_truyen = Truyen::orderBy('id','DESC')->where('kichhoat', 0)->take(8)->get();
+        $slide_truyen = Truyen::with('danhmuctruyen','thuocnhieutheloaitruyen')->orderBy('id','DESC')->where('kichhoat', 0)->take(8)->get();
 
         $danhmuc = DanhmucTruyen:: orderBy('id','DESC')->get();
 
-        $truyen = Truyen:: orderBy('id','DESC')->where('kichhoat', 0)->get();
+        $truyen = Truyen::with('thuocnhieutheloaitruyen')->orderBy('id','DESC')->where('kichhoat', 0)->get();
 
         return view('pages.home')->with(compact('danhmuc','truyen','theloai','slide_truyen'));
 
@@ -44,7 +56,7 @@ class indexController extends Controller
 
         $danhmuc = DanhmucTruyen:: orderBy('id','DESC')->get();
 
-        $slide_truyen = Truyen::orderBy('id','DESC')->where('kichhoat', 0)->take(8)->get();
+        $slide_truyen = Truyen::with('danhmuctruyen','thuocnhieutheloaitruyen')->orderBy('id','DESC')->where('kichhoat', 0)->take(8)->get();
 
         $danhmuc_id = DanhmucTruyen::where('slug_danhmuc', $slug)->first();
 
@@ -60,32 +72,34 @@ class indexController extends Controller
 
         $danhmuc = DanhmucTruyen:: orderBy('id','DESC')->get();
 
-        $slide_truyen = Truyen::orderBy('id','DESC')->where('kichhoat', 0)->take(8)->get();
+        $slide_truyen = Truyen::with('danhmuctruyen','thuocnhieutheloaitruyen')->orderBy('id','DESC')->where('kichhoat', 0)->take(8)->get();
 
         $theloai_id = Theloai::where('slug_theloai',$slug)->first();
 
         $tentheloai = $theloai_id->tentheloai;
 
-        $truyen = Truyen:: orderBy('id','DESC')->where('kichhoat', 0)->where('theloai_id',$theloai_id->id)->get();
+        $truyen = Truyen::with('danhmuctruyen','thuocnhieutheloaitruyen')-> orderBy('id','DESC')->where('kichhoat', 0)->where('theloai_id',$theloai_id->id)->get();
         return view('pages.theloai')->with(compact('danhmuc','truyen', 'tentheloai','theloai','slide_truyen'));
     }
 
     public function xemtruyen($slug)
     {
-        $slide_truyen = Truyen::orderBy('id','DESC')->where('kichhoat', 0)->take(8)->get();
+        $slide_truyen = Truyen::with('danhmuctruyen','thuocnhieutheloaitruyen')->orderBy('id','DESC')->where('kichhoat', 0)->take(8)->get();
         $theloai = Theloai:: orderBy('id','DESC')->get();
         $danhmuc = DanhmucTruyen::orderBy('id','DESC')->get();
-        $truyen = Truyen::with('danhmuctruyen','theloai')->where('slug_truyen', $slug)->where('kichhoat', 0)->first();
+        $truyen = Truyen::with('danhmuctruyen','thuocnhieutheloaitruyen')->with('danhmuctruyen','theloai')->where('slug_truyen', $slug)->where('kichhoat', 0)->first();
         $chapter = Chapter::with('truyen')->orderBy('id', 'ASC')->where('truyen_id', $truyen->id)->get();
         $chapter_dau = Chapter::with('truyen')->orderBy('id', 'ASC')->where('truyen_id', $truyen->id)->first();
         $chapter_cuoi = Chapter::with('truyen')->orderBy('id', 'DESC')->where('truyen_id', $truyen->id)->first();
         $cungdanhmuc = Truyen::with('danhmuctruyen','theloai')->where('danhmuc_id', $truyen->danhmuctruyen->id)->whereNotIn('id', [$truyen->id])->get();
+        $truyennoibat = Truyen::where('truyen_noibat',0)->take(20)->get();
+        $truyenxemnhieu = Truyen::where('truyen_noibat',2)->take(20)->get();
 
-        return view('pages.truyen')->with(compact('danhmuc','truyen', 'chapter','cungdanhmuc','chapter_dau','theloai','slide_truyen','chapter_cuoi'));
+        return view('pages.truyen')->with(compact('danhmuc','truyen', 'chapter','cungdanhmuc','chapter_dau','theloai','slide_truyen','chapter_cuoi','truyennoibat','truyenxemnhieu'));
     }
 
     public function xemchapter($slug){
-        $slide_truyen = Truyen::orderBy('id','DESC')->where('kichhoat', 0)->take(8)->get();
+        $slide_truyen = Truyen::with('danhmuctruyen','thuocnhieutheloaitruyen')->orderBy('id','DESC')->where('kichhoat', 0)->take(8)->get();
 
         $theloai = Theloai:: orderBy('id','DESC')->get();
         $danhmuc = DanhmucTruyen::orderBy('id','DESC')->get();
@@ -110,24 +124,24 @@ class indexController extends Controller
     }
     public function timkiem(Request $request){
         $data = $request->all();
-        $slide_truyen = Truyen::orderBy('id','DESC')->where('kichhoat', 0)->take(8)->get();
+        $slide_truyen = Truyen::with('danhmuctruyen','thuocnhieutheloaitruyen')->orderBy('id','DESC')->where('kichhoat', 0)->take(8)->get();
         $theloai = Theloai:: orderBy('id','DESC')->get();
         $danhmuc = DanhmucTruyen::orderBy('id','DESC')->get();
 
         $tukhoa = $data['tukhoa'];
-        $truyen = Truyen::with('danhmuctruyen','theloai')->where('tentruyen','LIKE','%'.$tukhoa.'%')->orwhere('tomtat','LIKE','%'.$tukhoa.'%')->orwhere('tacgia','LIKE','%'.$tukhoa.'%')->get();
+        $truyen = Truyen::with('danhmuctruyen','thuocnhieutheloaitruyen')->where('tentruyen','LIKE','%'.$tukhoa.'%')->orwhere('tomtat','LIKE','%'.$tukhoa.'%')->orwhere('tacgia','LIKE','%'.$tukhoa.'%')->get();
 
         return view('pages.timkiem')->with(compact('danhmuc','truyen','theloai','slide_truyen','tukhoa'));
     }
 
     public function tag($tag){
-        $slide_truyen = Truyen::orderBy('id','DESC')->where('kichhoat', 0)->take(8)->get();
+        $slide_truyen = Truyen::with('danhmuctruyen','thuocnhieutheloaitruyen')->orderBy('id','DESC')->where('kichhoat', 0)->take(8)->get();
         $theloai = Theloai:: orderBy('id','DESC')->get();
         $danhmuc = DanhmucTruyen::orderBy('id','DESC')->get();
 
         $tags = explode("-", $tag);
 
-        $truyen = Truyen::with('danhmuctruyen','theloai')->where(function($query) use($tags){
+        $truyen = Truyen::with('danhmuctruyen','thuocnhieutheloaitruyen')->where(function($query) use($tags){
             for($i=0; $i < count($tags); $i++){
                 $query->orwhere('tukhoa','LIKE','%' .$tags[$i] .'%');
             }

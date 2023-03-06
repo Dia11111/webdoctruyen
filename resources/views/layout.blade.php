@@ -71,7 +71,11 @@
                                 @endforeach
                             </div>
                         </li>
-                        
+                        <select style="background-color: rgba(var(--bs-light-rgb), var(--bs-bg-opacity));
+                            border: none;" class="custom-select mr-sm-2" id="switch_color">
+                            <option value="xam">Xám</option>
+                            <option value="den">Đen</option>
+                        </select>
                     </ul>
                         <form autocomplete="off" class="d-flex position-relative" action="{{url('tim-kiem')}}" method="POST">
                             @csrf
@@ -79,10 +83,7 @@
                             <div id="search_ajax" class=" position-absolute top-100 mt-2 w-100"></div>
                             <button class="btn btn-outline-success" type="submit">Search</button>
                         </form>
-                    <select class="custom-select mr-sm-2" id="switch_color">
-                        <option value="xam">Xám</option>
-                        <option value="den">Đen</option>
-                    </select>
+                    
                 </div>
             </div>
         </nav>
@@ -102,7 +103,93 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
     <script src="{{ asset('js/owl.carousel.js') }}"></script>
-    
+    <!-- Go to www.addthis.com/dashboard to customize your tools -->
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-6400b1cb7e7bb95d"></script>
+
+    <script type="text/javascript">
+        show_wishlist();
+        function show_wishlist(){
+            if(localStorage.getItem('wishlist_truyen')!=null){
+                var data = JSON.parse(localStorage.getItem('wishlist_truyen'));
+
+                data.reverse();
+
+                for(i=0;i<data.length;i++){
+
+                    var title = data[i].title;
+                    var img = data[i].img;
+                    var id = data[i].id;
+                    var url = data[i].url;
+
+                    $('#yeuthich').append(`
+                    <div class ="row mt-2">
+                    <div class="col-md-5"><img class="img img-responsive" height="150" weight="150" with="100%" class="card-img-top" src="`+img+`" alt="`+title+`"></div>
+                    <div class="col-md-7 sidebar">
+                        <a href="`+url+`">
+                            <p>`+title+`</p>    
+                        </a>
+                    </div>
+                    </div>`
+                );
+
+            }
+                }
+            }
+        
+        $('.btn-thich_truyen').click(function(){
+            $('.fa.fa-heart').css('color', '#ffd700');
+
+            const id=$('.wishlist_id').val();
+            const title=$('.wishlist_title').val();
+            const img=$('.card-img-top').attr('src');
+            const url=$('.wishlist_id').val();
+
+            // alert(id);
+            // alert(title);
+            // alert(img);
+            // alert(url);
+
+            const item = {
+                'id':id,
+                'title':title,
+                'img':img,
+                'url':url
+            }
+            if(localStorage.getItem('wishlist_truyen')==null){
+                localStorage.setItem('wishlist_truyen','[]');
+            }
+            var old_data = JSON.parse(localStorage.getItem('wishlist_truyen'));
+            var matches = $.grep(old_data, function(obj){
+                return obj.id == id;
+            })
+            if(matches.length){
+                alert('Truyện đã có trong danh sách yêu thích');
+            }else{
+                if(old_data.length<=10){
+                    old_data.push(item);
+                }else{
+                    alert('Đã đạt tới giới hạn lưu truyện yêu thích.');
+                }
+                
+                $('#yeuthich').append(`
+                <div class ="row mt-2">
+                    <div class="col-md-5"><img class="img img-responsive" height="150" weight="150" with="100%" class="card-img-top" src="`+img+`" alt="`+title+`"></div>
+                    <div class="col-md-7 sidebar">
+                        <a href="`+url+`">
+                            <p style="color:#666">`+title+`</p>    
+                        </a>
+                    </div>
+                    </div>
+                    `);
+
+                localStorage.setItem('wishlist_truyen', JSON.stringify(old_data));
+                alert('Đã lưu vào danh sách truyện yêu thích.');
+            }
+            localStorage.setItem('wishlist_truyen', JSON.stringify(old_data));
+            
+            
+        });
+    </script>
     <script type="text/javascript">
         $(document).ready(function(){
 
