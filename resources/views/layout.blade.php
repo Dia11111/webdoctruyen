@@ -27,13 +27,12 @@
         .noidung_color{
             color: #fff;
         }
-    </style>    
+    </style>
 
 </head>
 
 
 <body>
-   
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
@@ -48,7 +47,7 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="{{url('/')}}">Trang chủ</a>
                         </li>
-                        
+
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
@@ -99,7 +98,7 @@
             </div>
         </footer>
     </div>
-   
+
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
     <script src="{{ asset('js/owl.carousel.js') }}"></script>
@@ -204,7 +203,7 @@
 
                 $("select option[value = 'den']").attr("selected","selected");
             }
-        
+
 
             $("#switch_color").change(function(){
                 $(document.body).toggleClass('switch_color');
@@ -219,19 +218,19 @@
                         'class_2':'switch_color_light'
                     }
                     localStorage.setItem('switch_color', JSON.stringify(item));
-                }else if($(this).val()=='xam'){ 
+                }else if($(this).val()=='xam'){
                     localStorage.removeItem('switch_color');
                     $('ul.mucluctruyen > li > a').css('color','#000');
-                }    
+                }
                 });
         });
-        
+
     </script>
 
     <script type="text/javascript">
         $('#keywords').keyup( function() {
             var keywords = $(this).val();
-            
+
                 if(keywords !='')
                 {
                     var _token = $('input[name="_token"]').val();

@@ -45,6 +45,13 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
+            'dump' => [
+                'dump_binary_path' => 'F:\xampp\mysql\bin', // only the path, so without `mysqldump` or `pg_dump`
+                'use_single_transaction',
+                'timeout' => 60 * 5, // 5 minute timeout
+                'exclude_tables' => ['table1', 'table2'],
+                'add_extra_option' => '--optionname=optionvalue', // for example '--column_statistics=0'
+            ],
             'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '3306'),
@@ -123,7 +130,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_database_'),
         ],
 
         'default' => [
