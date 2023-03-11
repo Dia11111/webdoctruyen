@@ -4,9 +4,9 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{url('/')}}">Trang chủ</a></li>
-        <li class="breadcrumb-item"><a
-                href="{{url('the-loai/' .$truyen_breadcrumb->theloai->slug_theloai)}}">{{$truyen_breadcrumb->theloai->tentheloai}}</a>
-        </li>
+        @foreach($truyen_breadcrumb->thuocnhieutheloaitruyen as $key => $breadcrumb_the)
+        <li class="breadcrumb-item"><a href="{{url('the-loai/' .$breadcrumb_the->slug_theloai)}}">{{$breadcrumb_the->tentheloai}}</a></li>
+        @endforeach
         <li class="breadcrumb-item"><a
                 href="{{url('danh-muc/' .$truyen_breadcrumb->danhmuctruyen->slug_danhmuc)}}">{{$truyen_breadcrumb->danhmuctruyen->tendanhmuc}}</a>
         </li>

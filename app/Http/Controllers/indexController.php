@@ -44,7 +44,7 @@ class indexController extends Controller
 
         $danhmuc = DanhmucTruyen:: orderBy('id','DESC')->get();
 
-        $truyen = Truyen::with('thuocnhieutheloaitruyen')->orderBy('id','DESC')->where('kichhoat', 0)->get();
+        $truyen = Truyen::with('danhmuctruyen','thuocnhieutheloaitruyen')->orderBy('id','DESC')->where('kichhoat', 0)->paginate(12);
 
         return view('pages.home')->with(compact('danhmuc','truyen','theloai','slide_truyen'));
 
@@ -129,7 +129,7 @@ class indexController extends Controller
         $danhmuc = DanhmucTruyen::orderBy('id','DESC')->get();
 
         $tukhoa = $data['tukhoa'];
-        $truyen = Truyen::with('danhmuctruyen','thuocnhieutheloaitruyen')->where('tentruyen','LIKE','%'.$tukhoa.'%')->orwhere('tomtat','LIKE','%'.$tukhoa.'%')->orwhere('tacgia','LIKE','%'.$tukhoa.'%')->get();
+        $truyen = Truyen::with('danhmuctruyen','thuocnhieutheloaitruyen')->where('tentruyen','LIKE','%'.$tukhoa.'%')->orwhere('tomtat','LIKE','%'.$tukhoa.'%')->orwhere('tacgia','LIKE','%'.$tukhoa.'%')->paginate(12);
 
         return view('pages.timkiem')->with(compact('danhmuc','truyen','theloai','slide_truyen','tukhoa'));
     }
@@ -149,4 +149,6 @@ class indexController extends Controller
 
         return view('pages.tag')->with(compact('danhmuc','truyen','theloai','slide_truyen','tag'));
     }
+
+    
 }

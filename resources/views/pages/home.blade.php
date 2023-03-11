@@ -21,11 +21,15 @@
 @endforeach
 <div class="row">
     <div class="album py-5 bg-light">
+        <div class="d-flex justify-content-between mb-2">
+            <h3>Truyện mới cập nhật</h3>
+            {{-- <a class="btn btn-success" href="#">Xem tất cả</a> --}}
+        </div>
         <div class="container">
-            <div class="d-flex justify-content-between mb-2">
+            {{-- <div class="d-flex justify-content-between mb-2">
                 <h3>Truyện mới cập nhật</h3>
                 <a class="btn btn-success" href="#">Xem tất cả</a>
-            </div>
+            </div> --}}
 
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 @foreach($truyen as $key => $value)
@@ -47,9 +51,18 @@
                     </div>
                 </div>
                 @endforeach
+                
             </div>
+           
         </div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+               {{$truyen->links('pagination::bootstrap-4')}} 
+            </ul>
+        </nav>
+       
     </div>
+    
 </div>
 {{-- ======================SACH HAY XEM NHIEU ==================================== --}}
 

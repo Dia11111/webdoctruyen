@@ -198,7 +198,9 @@
         <h3 class="card-header">Truyện nổi bật</h3>
         @foreach($truyennoibat as $key => $noibat)
         <div class="row-mt-2">
-            <div class="col-md-5"><img class="img img-responsive" height="150" weight="150" with="100%" class="card-img-top" src="{{asset('public/uploads/truyen/'.$noibat->hinhanh)}}" alt="{{$noibat->tentruyen}}"></div>
+            <div class="col-md-5">
+                <img class="img img-responsive" height="150" weight="150" with="100%" class="card-img-top" src="{{asset('public/uploads/truyen/'.$noibat->hinhanh)}}" alt="{{$noibat->tentruyen}}">
+            </div>
                 <div class="col-md-7 sidebar">
                     <a href="{{url('xem-truyen/'.$noibat->slug_truyen)}}">
                         <p style="color:#666">{{$noibat->tentruyen}}</p>    

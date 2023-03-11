@@ -27,8 +27,8 @@
                             <th scope="col">Danh mục</th>
                             <th scope="col">Thể loại</th>
                             <th scope="col">Tình trạng</th>
-                            <th scope="col">Nổi bật</th>
                             <th scope="col">Kích hoạt</th>
+                            <th scope="col">Nổi bật</th>                            
                             <th scope="col">Ngày tạo</th>
                             <th scope="col">Ngày cập nhật</th>
                             <th scope="col">Quản lý</th>
