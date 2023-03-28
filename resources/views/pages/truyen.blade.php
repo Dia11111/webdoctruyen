@@ -13,6 +13,11 @@
 <div class="row">
     <div class="col-md-9">
         <div class="row">
+            @php
+
+            $mucluc = count($chapter);
+
+            @endphp
             <div class="col-md-3">
                 <img class="card-img-top" src="{{asset('public/uploads/truyen/' .$truyen->hinhanh)}}">
             </div>
@@ -40,14 +45,14 @@
                         <a href="{{url('the-loai/' .$thuocloai->slug_theloai)}}">{{$thuocloai->tentheloai}}</a>
                         @endforeach
                     </li>
-                    <li>Số chapter: 200</li>
+                    <li>Số chapter: {{$mucluc}}</li>
                     <li>Số lượt xem: 2000</li>
                     <li><a class="xemmucluc" style="cursor: pointer;">Xem mục lục</a></li>
                     
                     @if($chapter_dau)
                     <li>
-                        <a href="{{url('xem-chapter/' .$chapter_dau->slug_chapter)}}" class="btn btn-primary">Đọc từ đầu</a>
-                        <a href="{{url('xem-chapter/' .$chapter_cuoi->slug_chapter)}}" class="btn btn-primary">Đọc mới nhất</a>
+                        <a href="{{url('xem-chapter/' .$chapter_dau->truyen->slug_truyen.'/'.$chapter_dau->slug_chapter)}}" class="btn btn-primary">Đọc từ đầu</a>
+                        <a href="{{url('xem-chapter/' .$chapter_cuoi->truyen->slug_truyen.'/' .$chapter_cuoi->slug_chapter)}}" class="btn btn-primary">Đọc mới nhất</a>
                         
                     </li>
 
@@ -157,8 +162,8 @@
             @if($mucluc > 0)
                 @foreach($chapter as $key => $chap)
                 <li>
-                    <a href="{{url('xem-chapter/'.$chap->slug_chapter)}}">{{$chap->tieude}}</a>
-                    <div class="chaster-time">{{$chap->created_at->diffForHumans()}}</div>                  
+                    <a href="{{url('xem-chapter/' .$chap->truyen->slug_truyen.'/'.$chap->slug_chapter)}}">{{$chap->tieude}}</a>
+                    <div class="chaster-time">9 mins</div>                  
                 </li>
                 @endforeach
                 

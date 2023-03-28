@@ -85,20 +85,29 @@ class indexController extends Controller
     public function xemtruyen($slug)
     {
         $slide_truyen = Truyen::with('danhmuctruyen','thuocnhieutheloaitruyen')->orderBy('id','DESC')->where('kichhoat', 0)->take(8)->get();
+
         $theloai = Theloai:: orderBy('id','DESC')->get();
+
         $danhmuc = DanhmucTruyen::orderBy('id','DESC')->get();
-        $truyen = Truyen::with('danhmuctruyen','thuocnhieutheloaitruyen')->with('danhmuctruyen','theloai')->where('slug_truyen', $slug)->where('kichhoat', 0)->first();
+
+        $truyen = Truyen::with('danhmuctruyen','thuocnhieutheloaitruyen')->where('slug_truyen', $slug)->where('kichhoat', 0)->first();
+
         $chapter = Chapter::with('truyen')->orderBy('id', 'ASC')->where('truyen_id', $truyen->id)->get();
+
         $chapter_dau = Chapter::with('truyen')->orderBy('id', 'ASC')->where('truyen_id', $truyen->id)->first();
+
         $chapter_cuoi = Chapter::with('truyen')->orderBy('id', 'DESC')->where('truyen_id', $truyen->id)->first();
-        $cungdanhmuc = Truyen::with('danhmuctruyen','theloai')->where('danhmuc_id', $truyen->danhmuctruyen->id)->whereNotIn('id', [$truyen->id])->get();
+
+        $cungdanhmuc = Truyen::with('danhmuctruyen')->where('danhmuc_id', $truyen->danhmuctruyen->id)->whereNotIn('id', [$truyen->id])->get();
+
         $truyennoibat = Truyen::where('truyen_noibat',0)->take(20)->get();
+
         $truyenxemnhieu = Truyen::where('truyen_noibat',2)->take(20)->get();
 
         return view('pages.truyen')->with(compact('danhmuc','truyen', 'chapter','cungdanhmuc','chapter_dau','theloai','slide_truyen','chapter_cuoi','truyennoibat','truyenxemnhieu'));
     }
 
-    public function xemchapter($slug){
+    public function xemchapter($slug_truyen,$slug){
         $slide_truyen = Truyen::with('danhmuctruyen','thuocnhieutheloaitruyen')->orderBy('id','DESC')->where('kichhoat', 0)->take(8)->get();
 
         $theloai = Theloai:: orderBy('id','DESC')->get();

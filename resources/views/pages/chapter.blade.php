@@ -39,16 +39,16 @@
                     <label for="exampleInputEmail1" class="form-label">Chọn chương</label>
 
                 <p><a class="btn btn-primary {{$chapter->id==$min_id->id ? 'isDisabled' : ''}}"
-                        href="{{url('xem-chapter/' .$previous_chapter)}}">Tập trước</a></p>
+                        href="{{url('xem-chapter/' .$chapter->truyen->slug_truyen.'/'.$previous_chapter)}}">Tập trước</a></p>
 
                 <select name="select-chapter" class="form-select select-chapter" aria-label="Default select example">
                     @foreach($all_chapter as $key => $chap)
-                    <option value="{{url('xem-chapter/' .$chap->slug_chapter)}}">{{$chap->tieude}}</option>
+                    <option value="{{url('xem-chapter/' .$chap->truyen->slug_truyen.'/'.$chap->slug_chapter)}}">{{$chap->tieude}}</option>
                     @endforeach
                 </select>
 
                 <p class="mt-3"><a class="btn btn-primary {{$chapter->id==$max_id->id ? 'isDisabled' : ''}}"
-                        href="{{url('xem-chapter/' .$next_chapter)}}">Tập sau</a></p>
+                        href="{{url('xem-chapter/' .$chapter->truyen->slug_truyen.'/'.$next_chapter)}}">Tập sau</a></p>
 
             </div>
         </div>
@@ -70,7 +70,7 @@
                 <label for="exampleInputEmail1" class="form-label">Chọn chương</label>
                 <select name="select-chapter" class="form-select select-chapter" aria-label="Default select example">
                     @foreach($all_chapter as $key => $chap)
-                    <option value="{{url('xem-chapter/' .$chap->slug_chapter)}}">{{$chap->tieude}}</option>
+                    <option value="{{url('xem-chapter/' .$chap->truyen->slug_truyen.'/'.$chap->slug_chapter)}}">{{$chap->tieude}}</option>
                     @endforeach
                 </select>
             </div>

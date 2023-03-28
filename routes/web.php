@@ -64,7 +64,7 @@ Route::prefix("admin")->middleware('auth','isAdmin')->group(function () {
 Route::get('/', [indexController::class, 'home']);
 Route::get('/danh-muc/{slug}', [indexController::class, 'danhmuc']);
 Route::get('/xem-truyen/{slug}', [indexController::class, 'xemtruyen']);
-Route::get('/xem-chapter/{slug}', [indexController::class, 'xemchapter']);
+Route::get('/xem-chapter/{slug_truyen}/{slug}', [indexController::class, 'xemchapter']);
 Route::get('/the-loai/{slug}', [indexController::class, 'theloai']);
 Route::get('/tag/{tag}', [indexController::class, 'tag']);
 Route::get('/kytu/{kytu}', [indexController::class, 'kytu']);
