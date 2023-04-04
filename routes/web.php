@@ -39,12 +39,12 @@ Route::post('/convert', function () {
             $text,
         );
 
-        // $res = $curl;
+        $res = $curl;
         $result = json_decode($curl->rawResponse);
         $audioContent = $result->async;
         return Redirect::back()->with([
             'audioContent' => $audioContent,
-            'res' => $result,
+            'res' => $res,
             'text' => $text
         ]);
     }
@@ -54,7 +54,7 @@ Route::post('/convert', function () {
 //======================================================================
 
 //Admin
-Route::prefix("admin")->middleware('auth','isAdmin')->group(function () {
+Route::prefix("admin")->middleware('auth', 'isAdmin')->group(function () {
     Route::resource('/danhmuc', DanhmucController::class);
     Route::resource('/truyen', TruyenController::class);
     Route::resource('/chapter', ChapterController::class);
@@ -75,7 +75,9 @@ Route::post('/timkiem-ajax', [indexController::class, 'timkiem_ajax']);
 Auth::routes();
 
 Route::get('/home', [indexController::class, 'home'])->name('home');
-
+Route::get('/info-user', [indexController::class, 'info_User'])->name('info-user');
+Route::get('/change-pass', [indexController::class, 'change_Pass'])->name('change-pass');
+Route::post('/update-pass', [indexController::class, 'update_password'])->name('update-pass');
 
 Route::get('/custom_error', function () {
     return Artisan::call('php artisan vendor:publish --tag=laravel-errors');
