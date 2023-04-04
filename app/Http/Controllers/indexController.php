@@ -94,7 +94,9 @@ class indexController extends Controller
         $danhmuc = DanhmucTruyen::orderBy('id', 'DESC')->get();
         $truyen = Truyen::with('danhmuctruyen', 'thuocnhieutheloaitruyen')->with('danhmuctruyen', 'theloai')->where('slug_truyen', $slug)->where('kichhoat', 0)->first();
         $chapter = Chapter::with('truyen')->orderBy('id', 'ASC')->where('truyen_id', $truyen->id)->get();
+
         $chapter_dau = Chapter::with('truyen')->orderBy('id', 'ASC')->where('truyen_id', $truyen->id)->first();
+
         $chapter_cuoi = Chapter::with('truyen')->orderBy('id', 'DESC')->where('truyen_id', $truyen->id)->first();
         $cungdanhmuc = Truyen::with('danhmuctruyen', 'theloai')->where('danhmuc_id', $truyen->danhmuctruyen->id)->whereNotIn('id', [$truyen->id])->get();
         $truyennoibat = Truyen::where('truyen_noibat', 0)->take(20)->get();

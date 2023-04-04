@@ -13,6 +13,11 @@
 <div class="row">
     <div class="col-md-9">
         <div class="row">
+            @php
+
+            $mucluc = count($chapter);
+
+            @endphp
             <div class="col-md-3">
                 <img class="card-img-top" src="{{asset('public/uploads/truyen/' .$truyen->hinhanh)}}">
             </div>
@@ -40,7 +45,7 @@
                         <a href="{{url('the-loai/' .$thuocloai->slug_theloai)}}">{{$thuocloai->tentheloai}}</a>
                         @endforeach
                     </li>
-                    <li>Số chapter: 200</li>
+                    <li>Số chapter: {{$mucluc}}</li>
                     <li>Số lượt xem: 2000</li>
                     <li><a class="xemmucluc" style="cursor: pointer;">Xem mục lục</a></li>
 
