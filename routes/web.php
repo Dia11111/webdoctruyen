@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DanhmucController;
 use App\Http\Controllers\indexController;
 use App\Http\Controllers\TruyenController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Curl\Curl;
@@ -39,13 +40,13 @@ Route::post('/convert', function () {
             $text,
         );
 
-        $res = $curl;
+        // $res = $curl;
         $result = json_decode($curl->rawResponse);
         $audioContent = $result->async;
         return Redirect::back()->with([
             'audioContent' => $audioContent,
-            'res' => $res,
-            'text' => $text
+            // 'res' => $res,
+            // 'text' => $text
         ]);
     }
     return Redirect::back();
@@ -59,12 +60,13 @@ Route::prefix("admin")->middleware('auth', 'isAdmin')->group(function () {
     Route::resource('/truyen', TruyenController::class);
     Route::resource('/chapter', ChapterController::class);
     Route::resource('/theloai', TheloaiController::class);
+    Route::resource('/user', UserController::class);
 });
 
 Route::get('/', [indexController::class, 'home']);
 Route::get('/danh-muc/{slug}', [indexController::class, 'danhmuc']);
 Route::get('/xem-truyen/{slug}', [indexController::class, 'xemtruyen']);
-Route::get('/xem-chapter/{slug_truyen}/{slug}', [indexController::class, 'xemchapter']);
+Route::get('/xem-chapter/{slug_truyen}', [indexController::class, 'xemchapter']);
 Route::get('/the-loai/{slug}', [indexController::class, 'theloai']);
 Route::get('/tag/{tag}', [indexController::class, 'tag']);
 Route::get('/kytu/{kytu}', [indexController::class, 'kytu']);
