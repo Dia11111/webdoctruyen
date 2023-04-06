@@ -38,6 +38,7 @@
                     <input type="hidden" value="{{$truyen->id}}" class="wishlist_id">
                     <!--End lay bien wishlist-->
                     <li>Tên truyện: {{$truyen->tentruyen}}</li>
+                    <li>Ngày cập nhật: {{$truyen->updated_at->diffForHumans()}}</li>
                     <li>Tác giả: {{$truyen->tacgia}}</li>
                     <li>Danh mục truyện: <a href="{{url('danh-muc/' .$truyen->danhmuctruyen->slug_danhmuc)}}">{{$truyen->danhmuctruyen->tendanhmuc}}</a></li>
                     <li>Thể loại truyện: 
@@ -163,7 +164,7 @@
                 @foreach($chapter as $key => $chap)
                 <li>
                     <a href="{{url('xem-chapter/' .$chap->truyen->slug_truyen.'/'.$chap->slug_chapter)}}">{{$chap->tieude}}</a>
-                    <div class="chaster-time">9 mins</div>                  
+                    <div class="chaster-time">{{$chap->created_at->diffForHumans()}}</div>                  
                 </li>
                 @endforeach
                 

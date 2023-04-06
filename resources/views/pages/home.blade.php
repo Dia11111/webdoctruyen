@@ -45,7 +45,7 @@
                                     <a type="button" class="btn btn-sm btn-outline-secondary"><i
                                             class="fa-solid fa-eye">565983</i></a>
                                 </div>
-                                <small class="text-muted">9 mins</small>
+                                <small class="text-muted">Ngày cập nhật: {{$value->updated_at->diffForHumans()}}</small>
                             </div>
                         </div>
                     </div>
