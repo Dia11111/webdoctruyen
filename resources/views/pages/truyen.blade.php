@@ -28,7 +28,7 @@
                 }
                 </style>
                 <ul class="list-unstyled ml-4 ps-3">
-                    <div class="fb-share-button" data-href="{{\URL::current()}}" data-layout="button" data-size="small"><a target="_blank" 
+                    <div class="fb-share-button" data-href="{{\URL::current()}}" data-layout="button" data-size="small"><a target="_blank"
                         href="{{\URL::current()}}&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Chia sẻ</a>
                     </div>
 
@@ -41,7 +41,7 @@
                     <li>Ngày cập nhật: {{$truyen->updated_at->diffForHumans()}}</li>
                     <li>Tác giả: {{$truyen->tacgia}}</li>
                     <li>Danh mục truyện: <a href="{{url('danh-muc/' .$truyen->danhmuctruyen->slug_danhmuc)}}">{{$truyen->danhmuctruyen->tendanhmuc}}</a></li>
-                    <li>Thể loại truyện: 
+                    <li>Thể loại truyện:
                         @foreach($truyen->thuocnhieutheloaitruyen as $thuocloai)
                         <a href="{{url('the-loai/' .$thuocloai->slug_theloai)}}">{{$thuocloai->tentheloai}}</a>
                         @endforeach
@@ -49,18 +49,18 @@
                     <li>Số chapter: {{$mucluc}}</li>
                     <li>Số lượt xem: 2000</li>
                     <li><a class="xemmucluc" style="cursor: pointer;">Xem mục lục</a></li>
-                    
+
                     @if($chapter_dau)
                     <li>
-                        <a href="{{url('xem-chapter/' .$chapter_dau->truyen->slug_truyen.'/'.$chapter_dau->slug_chapter)}}" class="btn btn-primary">Đọc từ đầu</a>
-                        <a href="{{url('xem-chapter/' .$chapter_cuoi->truyen->slug_truyen.'/' .$chapter_cuoi->slug_chapter)}}" class="btn btn-primary">Đọc mới nhất</a>
-                        
+                        <a href="{{url('xem-chapter/' .$chapter_dau->slug_chapter)}}" class="btn btn-primary">Đọc từ đầu</a>
+                        <a href="{{url('xem-chapter/' .$chapter_cuoi->slug_chapter)}}" class="btn btn-primary">Đọc mới nhất</a>
+
                     </li>
 
                     <li><button class="btn btn-danger mt-2 btn-thich_truyen"><i class="fa fa-heart" aria-hidden="true"></i>Thích truyện</button></li>
                     @else
                     <li><a class="btn btn-danger">Chưa có chương để đọc</a></li>
-                    @endif  
+                    @endif
                 </ul>
             </div>
         </div>
@@ -167,13 +167,13 @@
                     <div class="chaster-time">{{$chap->created_at->diffForHumans()}}</div>                  
                 </li>
                 @endforeach
-                
+
             @else
-                <li>Đang cập nhật...</li>    
+                <li>Đang cập nhật...</li>
             @endif
-                
+
         </ul>
-        
+
         <div class="fb-comments" data-href="https://developers.facebook.com/docs/plugins/comments#configurator" data-width="100%" data-numposts="10"></div>
         <h4 class="card-header">Sách cùng mục</h4>
         <div class="row">
@@ -196,8 +196,8 @@
                     </div>
                 </div>
                 @endforeach
-            
-            
+
+
         </div>
     </div>
     <div class="col-md-3">
@@ -209,7 +209,7 @@
             </div>
                 <div class="col-md-7 sidebar">
                     <a href="{{url('xem-truyen/'.$noibat->slug_truyen)}}">
-                        <p style="color:#666">{{$noibat->tentruyen}}</p>    
+                        <p style="color:#666">{{$noibat->tentruyen}}</p>
                     </a>
                 </div>
         </div>
@@ -221,18 +221,18 @@
             <div class="col-md-5"><img class="img img-responsive" height="150" weight="150" with="100%" class="card-img-top" src="{{asset('public/uploads/truyen/'.$xemnhieu->hinhanh)}}" alt="{{$xemnhieu->tentruyen}}"></div>
                 <div class="col-md-7 sidebar">
                     <a href="{{url('xem-truyen/'.$xemnhieu->slug_truyen)}}">
-                        <p style="color:#666">{{$xemnhieu->tentruyen}}</p>    
+                        <p style="color:#666">{{$xemnhieu->tentruyen}}</p>
                     </a>
                 </div>
         </div>
         @endforeach
-        
+
         <h3 class="card-header title_truyen">Truyện yêu thích</h3>
         <div id="yeuthich">
-                
+
         </div>
     </div>
-    
-    
+
+
 </div>
 @endsection

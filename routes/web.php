@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DanhmucController;
 use App\Http\Controllers\indexController;
 use App\Http\Controllers\TruyenController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Curl\Curl;
@@ -44,8 +45,8 @@ Route::post('/convert', function () {
         $audioContent = $result->async;
         return Redirect::back()->with([
             'audioContent' => $audioContent,
-            'res' => $result,
-            'text' => $text
+            // 'res' => $res,
+            // 'text' => $text
         ]);
     }
     return Redirect::back();
@@ -54,17 +55,18 @@ Route::post('/convert', function () {
 //======================================================================
 
 //Admin
-Route::prefix("admin")->middleware('auth','isAdmin')->group(function () {
+Route::prefix("admin")->middleware('auth', 'isAdmin')->group(function () {
     Route::resource('/danhmuc', DanhmucController::class);
     Route::resource('/truyen', TruyenController::class);
     Route::resource('/chapter', ChapterController::class);
     Route::resource('/theloai', TheloaiController::class);
+    Route::resource('/user', UserController::class);
 });
 
 Route::get('/', [indexController::class, 'home']);
 Route::get('/danh-muc/{slug}', [indexController::class, 'danhmuc']);
 Route::get('/xem-truyen/{slug}', [indexController::class, 'xemtruyen']);
-Route::get('/xem-chapter/{slug_truyen}/{slug}', [indexController::class, 'xemchapter']);
+Route::get('/xem-chapter/{slug_truyen}', [indexController::class, 'xemchapter']);
 Route::get('/the-loai/{slug}', [indexController::class, 'theloai']);
 Route::get('/tag/{tag}', [indexController::class, 'tag']);
 Route::get('/kytu/{kytu}', [indexController::class, 'kytu']);
@@ -75,7 +77,9 @@ Route::post('/timkiem-ajax', [indexController::class, 'timkiem_ajax']);
 Auth::routes();
 
 Route::get('/home', [indexController::class, 'home'])->name('home');
-
+Route::get('/info-user', [indexController::class, 'info_User'])->name('info-user');
+Route::get('/change-pass', [indexController::class, 'change_Pass'])->name('change-pass');
+Route::post('/update-pass', [indexController::class, 'update_password'])->name('update-pass');
 
 Route::get('/custom_error', function () {
     return Artisan::call('php artisan vendor:publish --tag=laravel-errors');
